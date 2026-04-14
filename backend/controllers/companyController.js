@@ -40,6 +40,9 @@ const createJobOpening = async (req, res) => {
     diplomaPercentage,
     graduationPercentage,
     graduationCGPA,
+    maxActiveBacklogs,
+    maxCompletedBacklogs,
+    maxDOB,
   } = req.body;
 
   const { userId, companyId } = req.user;
@@ -62,7 +65,15 @@ const createJobOpening = async (req, res) => {
 
   // Validate eligibility criteria if filter is enabled
   if (enableEligibilityFilter === 'true' || enableEligibilityFilter === true) {
-    const hasCriteria = tenthPercentage || twelfthPercentage || diplomaPercentage || graduationPercentage || graduationCGPA;
+    const hasCriteria =
+      tenthPercentage ||
+      twelfthPercentage ||
+      diplomaPercentage ||
+      graduationPercentage ||
+      graduationCGPA ||
+      maxActiveBacklogs ||
+      maxCompletedBacklogs ||
+      maxDOB;
     
     if (!hasCriteria) {
       throw new CustomAPIError.BadRequestError(
@@ -83,11 +94,30 @@ const createJobOpening = async (req, res) => {
       return !isNaN(num) && num >= 0 && num <= 10;
     };
 
-    if (!validatePercentage(tenthPercentage) || !validatePercentage(twelfthPercentage) || 
-        !validatePercentage(diplomaPercentage) || !validatePercentage(graduationPercentage) ||
-        !validateCGPA(graduationCGPA)) {
+    const validateBacklogs = (val) => {
+      if (!val && val !== 0) return true;
+      const num = Number(val);
+      return !isNaN(num) && num >= 0;
+    };
+
+    const validateDate = (val) => {
+      if (!val) return true;
+      const dateValue = new Date(val);
+      return !Number.isNaN(dateValue.getTime());
+    };
+
+    if (
+      !validatePercentage(tenthPercentage) ||
+      !validatePercentage(twelfthPercentage) ||
+      !validatePercentage(diplomaPercentage) ||
+      !validatePercentage(graduationPercentage) ||
+      !validateCGPA(graduationCGPA) ||
+      !validateBacklogs(maxActiveBacklogs) ||
+      !validateBacklogs(maxCompletedBacklogs) ||
+      !validateDate(maxDOB)
+    ) {
       throw new CustomAPIError.BadRequestError(
-        'Invalid eligibility criteria values. Percentages must be 0-100, CGPA must be 0-10.'
+        'Invalid eligibility criteria values. Percentages must be 0-100, CGPA must be 0-10, backlogs must be non-negative, and date of birth must be valid.'
       );
     }
   }

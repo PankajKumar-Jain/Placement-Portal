@@ -26,6 +26,8 @@ function studentProfileDetailsAgg(studentId, isPrivate = false) {
         trainings: 1,
         experiences: 1,
         placements: 1,
+        activeBacklogs: 1,
+        completedBacklogs: 1,
       },
     },
     {

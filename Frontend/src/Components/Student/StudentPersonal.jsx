@@ -102,6 +102,20 @@ const StudentPersonal = () => {
               label="Contact Number"
               defaultValue={contactNumber}
             />
+            <SimpleFormInput
+              name="activeBacklogs"
+              type="number"
+              label="Active Backlogs"
+              min="0"
+              defaultValue={personalDetails?.activeBacklogs ?? ''}
+            />
+            <SimpleFormInput
+              name="completedBacklogs"
+              type="number"
+              label="Completed Backlogs"
+              min="0"
+              defaultValue={personalDetails?.completedBacklogs ?? ''}
+            />
           </div>
 
           <button

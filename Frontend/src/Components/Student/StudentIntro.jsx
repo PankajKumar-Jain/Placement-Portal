@@ -2,8 +2,16 @@ import { useSelector } from 'react-redux';
 import defaultAvatar from '../../assets/default-avatar.jpg';
 
 const StudentIntro = () => {
-  const { name, courseName, departmentName, rollNo, batchYear, photo } =
-    useSelector((state) => state.studentProfileState);
+  const {
+    name,
+    courseName,
+    departmentName,
+    rollNo,
+    batchYear,
+    photo,
+    activeBacklogs,
+    completedBacklogs,
+  } = useSelector((state) => state.studentProfileState);
 
   return (
     <section className="flex gap-8 items-center flex-wrap justify-center md:justify-normal">
@@ -30,6 +38,14 @@ const StudentIntro = () => {
         <p>
           <span className="font-medium text-lg">Roll No: </span>
           {rollNo}
+        </p>
+        <p>
+          <span className="font-medium text-lg">Active Backlogs: </span>
+          {activeBacklogs ?? 0}
+        </p>
+        <p>
+          <span className="font-medium text-lg">Completed Backlogs: </span>
+          {completedBacklogs ?? 0}
         </p>
       </div>
     </section>

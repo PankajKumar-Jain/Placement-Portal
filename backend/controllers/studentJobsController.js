@@ -1,5 +1,6 @@
 const JobOpeningModel = require('../models/JobOpenings');
 const UserModel = require('../models/User');
+const PersonalDataModel = require('../models/student/PersonalData');
 
 const { StatusCodes } = require('http-status-codes');
 const CustomAPIError = require('../errors');
@@ -44,6 +45,7 @@ const getJobsForStudent = async (req, res) => {
 
   const student = await UserModel.findById(userId);
   const studentEducation = await EducationModel.findOne({ studentId: userId });
+  const studentPersonal = await PersonalDataModel.findOne({ studentId: userId });
   const userSkills = (student.skills || []).map((s) => s.toLowerCase().trim());
 
   jobs = jobs.map((job) => {
@@ -80,7 +82,9 @@ const getJobsForStudent = async (req, res) => {
       } else {
         eligibilityStatus = checkAcademicEligibility(
           studentEducation,
-          job.eligibilityCriteria
+          job.eligibilityCriteria,
+          studentPersonal,
+          student
         );
       }
     }
@@ -125,6 +129,7 @@ const getStudentJobById = async (req, res) => {
     throw new CustomAPIError.NotFoundError(`No job found with id: ${jobId}`);
 
   const student = await UserModel.findById(userId);
+  const studentPersonal = await PersonalDataModel.findOne({ studentId: userId });
   const userSkills = (student.skills || []).map((s) => s.toLowerCase().trim());
   
   let requiredSkills = job.keySkills || [];
@@ -158,7 +163,9 @@ const getStudentJobById = async (req, res) => {
     });
     eligibilityStatus = checkAcademicEligibility(
       studentEducation,
-      job.eligibilityCriteria
+      job.eligibilityCriteria,
+      studentPersonal,
+      student
     );
   }
 
@@ -203,6 +210,8 @@ const createJobApplication = async (req, res) => {
 
   const applicant = await UserModel.findById(applicantId);
   if (!applicant) throw new CustomAPIError.BadRequestError('Invalid user!');
+
+  const applicantPersonal = await PersonalDataModel.findOne({ studentId: applicantId });
 
   // Check if student is already hired
   if (applicant.hiredStatus !== 'none') {
@@ -260,7 +269,9 @@ const createJobApplication = async (req, res) => {
 
     const eligibilityStatus = checkAcademicEligibility(
       studentEducation,
-      job.eligibilityCriteria
+      job.eligibilityCriteria,
+      applicantPersonal,
+      applicant
     );
 
     if (!eligibilityStatus.isEligible) {

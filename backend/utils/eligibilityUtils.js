@@ -2,11 +2,15 @@
  * Check if a student meets the job's eligibility criteria
  * @param {Object} studentEducation - Student's education data
  * @param {Object} eligibilityCriteria - Job's eligibility criteria
+ * @param {Object} studentPersonal - Student's personal data (for DOB)
+ * @param {Object} student - Student user data (for backlogs)
  * @returns {Object} - { isEligible: boolean, reasons: [] }
  */
 const checkAcademicEligibility = (
   studentEducation,
-  eligibilityCriteria
+  eligibilityCriteria,
+  studentPersonal = null,
+  student = null
 ) => {
   const reasons = [];
 
@@ -100,6 +104,44 @@ const checkAcademicEligibility = (
             `Your graduation CGPA (${graduation.aggregateGPA.toFixed(2)}) is below the required ${eligibilityCriteria.graduationCGPA}`
           );
         }
+      }
+    }
+  }
+
+  // Check active backlogs
+  if (eligibilityCriteria.maxActiveBacklogs !== undefined && eligibilityCriteria.maxActiveBacklogs !== null) {
+    if (student && student.activeBacklogs > eligibilityCriteria.maxActiveBacklogs) {
+      reasons.push(
+        `Your active backlogs (${student.activeBacklogs}) exceed the allowed limit (${eligibilityCriteria.maxActiveBacklogs})`
+      );
+    }
+  }
+
+  // Check completed backlogs
+  if (eligibilityCriteria.maxCompletedBacklogs !== undefined && eligibilityCriteria.maxCompletedBacklogs !== null) {
+    if (student && student.completedBacklogs > eligibilityCriteria.maxCompletedBacklogs) {
+      reasons.push(
+        `Your completed backlogs (${student.completedBacklogs}) exceed the allowed limit (${eligibilityCriteria.maxCompletedBacklogs})`
+      );
+    }
+  }
+
+  // Check DOB / minimum age eligibility
+  if (eligibilityCriteria.maxDOB) {
+    if (!studentPersonal?.dateOfBirth) {
+      reasons.push(
+        'Your date of birth is missing. Please update your personal details to verify age eligibility.'
+      );
+    } else {
+      const studentDOB = new Date(studentPersonal.dateOfBirth);
+      const maxDOB = new Date(eligibilityCriteria.maxDOB);
+
+      if (studentDOB > maxDOB) {
+        const age = Math.floor((new Date() - studentDOB) / (365.25 * 24 * 60 * 60 * 1000));
+        const requiredAge = Math.floor((new Date() - maxDOB) / (365.25 * 24 * 60 * 60 * 1000));
+        reasons.push(
+          `Your age (${age} years) is below the required minimum age of ${requiredAge} years.`
+        );
       }
     }
   }

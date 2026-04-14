@@ -106,6 +106,18 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
 
+    activeBacklogs: {
+      type: Number,
+      min: 0,
+      default: 0,
+    },
+
+    completedBacklogs: {
+      type: Number,
+      min: 0,
+      default: 0,
+    },
+
     personalDetails: {
       type: mongoose.Types.ObjectId,
       ref: 'StudentPersonalData',

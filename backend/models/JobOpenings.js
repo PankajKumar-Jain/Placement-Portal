@@ -120,6 +120,23 @@ const EligibilityCriteriaSchema = new mongoose.Schema(
       max: 10,
       required: false,
     },
+
+    maxActiveBacklogs: {
+      type: Number,
+      min: 0,
+      required: false,
+    },
+
+    maxCompletedBacklogs: {
+      type: Number,
+      min: 0,
+      required: false,
+    },
+
+    maxDOB: {
+      type: Date,
+      required: false,
+    },
   },
   { versionKey: false, _id: false }
 );
