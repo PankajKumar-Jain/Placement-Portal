@@ -36,6 +36,8 @@ const {
   updateAchievement,
   deleteAchievement,
   getAchievements,
+
+  changePassword,
 } = require('../controllers/studentDetailsController');
 
 const {
@@ -88,6 +90,8 @@ router.post('/achievements', addAchievement);
 router.delete('/achievements', deleteAchievement);
 router.get('/achievements', getAchievements);
 router.patch('/achievements', updateAchievement);
+
+router.post('/change-password', changePassword);
 
 router.get('/applications', getApplications);
 

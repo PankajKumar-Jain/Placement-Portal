@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const {
   CourseModel,
   DepartmentModel,
@@ -11,6 +12,25 @@ const CustomAPIError = require('../errors');
 const { StatusCodes } = require('http-status-codes');
 const { fileUpload } = require('../utils/fileUpload');
 
+const normalizeArray = (value) => {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+  if (typeof value === 'string') {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return [value];
+    }
+  }
+  return [];
+};
+
+const resolveMapKey = (value) => {
+  if (typeof value === 'string') return value;
+  if (value instanceof mongoose.Types.ObjectId) return value.toHexString();
+  return null;
+};
+
 const createNotice = async (req, res) => {
   let {
     noticeTitle,
@@ -22,11 +42,8 @@ const createNotice = async (req, res) => {
     isUrgent,
   } = req.body;
 
-  // Handle arrays that might come as JSON strings or undefined
-  receivingBatches = receivingBatches ? 
-    (typeof receivingBatches === 'string' ? JSON.parse(receivingBatches) : receivingBatches) : [];
-  receivingDepartments = receivingDepartments ? 
-    (typeof receivingDepartments === 'string' ? JSON.parse(receivingDepartments) : receivingDepartments) : [];
+  receivingBatches = normalizeArray(receivingBatches);
+  receivingDepartments = normalizeArray(receivingDepartments);
 
   let noticeFile = req?.files?.noticeFile;
   if (!noticeTitle?.trim() || !noticeBody?.trim())
@@ -97,11 +114,8 @@ const updateNotice = async (req, res) => {
     isUrgent,
   } = req.body;
 
-  // Handle arrays that might come as JSON strings or undefined
-  receivingBatches = receivingBatches ? 
-    (typeof receivingBatches === 'string' ? JSON.parse(receivingBatches) : receivingBatches) : [];
-  receivingDepartments = receivingDepartments ? 
-    (typeof receivingDepartments === 'string' ? JSON.parse(receivingDepartments) : receivingDepartments) : [];
+  receivingBatches = normalizeArray(receivingBatches);
+  receivingDepartments = normalizeArray(receivingDepartments);
 
   let noticeFile = req?.files?.noticeFile;
 
@@ -206,7 +220,9 @@ const deleteNotice = async (req, res) => {
   course.lastNoticeTime = courseLastNotice?.updatedAt || new Date();
 
   for (let receivingBatch of receivingBatches) {
-    const batch = course.batches.get(receivingBatch.toString());
+    const batchKey = resolveMapKey(receivingBatch);
+    if (!batchKey) continue;
+    const batch = course.batches.get(batchKey);
     if (!batch) continue;
 
     let batchLastNotice = await NoticeModel.find({ receivingBatches: receivingBatch })
@@ -218,7 +234,9 @@ const deleteNotice = async (req, res) => {
   }
 
   for (let receivingDepartment of receivingDepartments) {
-    const department = course.departments.get(receivingDepartment.toString());
+    const departmentKey = resolveMapKey(receivingDepartment);
+    if (!departmentKey) continue;
+    const department = course.departments.get(departmentKey);
     if (!department) continue;
 
     let departmentLastNotice = await NoticeModel.find({ receivingDepartments: receivingDepartment })
@@ -238,19 +256,14 @@ const getAllNotices = async (req, res) => {
     .populate({
       path: 'receivingCourse',
       select: 'courseName',
-    })
-    .populate({
-      path: 'receivingBatches',
-      select: 'batchYear',
-    })
-    .populate({
-      path: 'receivingDepartments',
-      select: 'departmentName',
     });
+
+  const enrichedNotices = await attachReceiverDetails(notices);
+
   res.status(StatusCodes.OK).json({
     success: true,
     message: 'Notices found!',
-    notices,
+    notices: enrichedNotices,
   });
 };
 
@@ -260,48 +273,116 @@ const getMyNotices = async (req, res) => {
 
   const { batchId, departmentId, courseId, lastNoticeFetched } = student;
 
-  const conditionalQueries = [
-    { targetType: 'all' },
-  ];
+  const conditionalQueries = [{ targetType: 'all' }];
 
   if (courseId) {
     conditionalQueries.push({ targetType: 'course', receivingCourse: courseId });
-    conditionalQueries.push({ targetType: 'branch', receivingCourse: courseId, receivingDepartments: departmentId });
-    conditionalQueries.push({ targetType: 'batch', receivingCourse: courseId, receivingBatches: batchId });
-    conditionalQueries.push({ targetType: 'branch_batch', receivingCourse: courseId, receivingDepartments: departmentId, receivingBatches: batchId });
 
-    conditionalQueries.push({ receivingCourse: courseId, receivingDepartments: departmentId, receivingBatches: batchId });
-    conditionalQueries.push({ receivingCourse: courseId, receivingDepartments: departmentId });
-    conditionalQueries.push({ receivingCourse: courseId, receivingBatches: batchId });
-    conditionalQueries.push({ receivingCourse: courseId });
+    if (departmentId) {
+      conditionalQueries.push({
+        targetType: 'branch',
+        receivingCourse: courseId,
+        receivingDepartments: { $in: [departmentId] },
+      });
+    }
+
+    if (batchId) {
+      conditionalQueries.push({
+        targetType: 'batch',
+        receivingCourse: courseId,
+        receivingBatches: { $in: [batchId] },
+      });
+    }
+
+    if (departmentId && batchId) {
+      conditionalQueries.push({
+        targetType: 'branch_batch',
+        receivingCourse: courseId,
+        receivingDepartments: { $in: [departmentId] },
+        receivingBatches: { $in: [batchId] },
+      });
+    }
   }
 
   const notices = await NoticeModel.find({
     $or: conditionalQueries,
   })
     .select(
-      'noticeTitle noticeBody noticeFile createdAt updatedAt isUrgent receivingBatches receivingDepartments targetType'
+      'noticeTitle noticeBody noticeFile createdAt updatedAt isUrgent receivingBatches receivingDepartments targetType receivingCourse'
     )
     .populate({
-      path: 'receivingBatches',
-      select: 'batchYear',
-    })
-    .populate({
-      path: 'receivingDepartments',
-      select: 'departmentName',
+      path: 'receivingCourse',
+      select: 'courseName',
     })
     .sort('-updatedAt');
+
+  const enrichedNotices = await attachReceiverDetails(notices);
 
   res.status(StatusCodes.OK).json({
     success: true,
     message: 'Notices found!',
-    notices,
+    notices: enrichedNotices,
     lastNoticeFetched,
   });
 
   student.lastNoticeFetched = new Date();
   await student.save();
 };
+
+async function attachReceiverDetails(notices) {
+  if (!Array.isArray(notices) || !notices.length) return notices;
+
+  const courseIds = [
+    ...new Set(
+      notices
+        .filter((notice) => notice.receivingCourse)
+        .map((notice) => String(notice.receivingCourse._id ?? notice.receivingCourse))
+    ),
+  ];
+
+  if (!courseIds.length) return notices;
+
+  const courses = await CourseModel.find({ _id: { $in: courseIds } })
+    .select('courseName batches departments')
+    .lean();
+
+  const courseMap = new Map(courses.map((course) => [course._id.toString(), course]));
+
+  return notices.map((notice) => {
+    const noticeObj = notice.toObject ? notice.toObject() : { ...notice };
+    const courseId = String(noticeObj.receivingCourse?._id ?? noticeObj.receivingCourse);
+    const course = courseMap.get(courseId);
+
+    if (!course) return noticeObj;
+
+    const departments = Array.isArray(noticeObj.receivingDepartments)
+      ? noticeObj.receivingDepartments
+          .map((deptId) => {
+            const key = String(deptId);
+            const dept = course.departments?.[key] ?? course.departments?.get?.(key);
+            return dept ? { departmentName: dept.departmentName } : null;
+          })
+          .filter(Boolean)
+      : [];
+
+    const batches = Array.isArray(noticeObj.receivingBatches)
+      ? noticeObj.receivingBatches
+          .map((batchId) => {
+            const key = String(batchId);
+            const batch = course.batches?.[key] ?? course.batches?.get?.(key);
+            return batch ? { batchYear: batch.batchYear } : null;
+          })
+          .filter(Boolean)
+      : [];
+
+    return {
+      ...noticeObj,
+      receivingCourse: { courseName: course.courseName, _id: course._id },
+      receivingDepartments: departments,
+      receivingBatches: batches,
+    };
+  });
+}
 
 async function validateNoticeReceivers(noticeReceivers) {
   const {
@@ -316,9 +397,6 @@ async function validateNoticeReceivers(noticeReceivers) {
   if (!allowedTypes.includes(resolvedTargetType)) {
     resolvedTargetType = 'all';
   }
-
-  const normalizeArray = (value) =>
-    Array.isArray(value) ? value : typeof value === 'string' && value.length ? [value] : [];
 
   const batches = normalizeArray(receivingBatches);
   const departments = normalizeArray(receivingDepartments);
@@ -348,7 +426,7 @@ async function validateNoticeReceivers(noticeReceivers) {
     }
     const validDepartments = [];
     for (let receivingDepartment of departments) {
-      const department = course.departments.get(receivingDepartment.toString());
+      const department = course.departments.get(String(receivingDepartment));
       if (!department) {
         throw new CustomAPIError.BadRequestError(
           `No Department found with id: ${receivingDepartment}`
@@ -370,7 +448,7 @@ async function validateNoticeReceivers(noticeReceivers) {
     }
     const validBatches = [];
     for (let receivingBatch of batches) {
-      const batch = course.batches.get(receivingBatch.toString());
+      const batch = course.batches.get(String(receivingBatch));
       if (!batch) {
         throw new CustomAPIError.BadRequestError(
           `No batch found with id: ${receivingBatch}`
@@ -397,7 +475,7 @@ async function validateNoticeReceivers(noticeReceivers) {
     const validDepartments = [];
 
     for (let receivingBatch of batches) {
-      const batch = course.batches.get(receivingBatch.toString());
+      const batch = course.batches.get(String(receivingBatch));
       if (!batch) {
         throw new CustomAPIError.BadRequestError(
           `No batch found with id: ${receivingBatch}`
@@ -407,7 +485,7 @@ async function validateNoticeReceivers(noticeReceivers) {
     }
 
     for (let receivingDepartment of departments) {
-      const department = course.departments.get(receivingDepartment.toString());
+      const department = course.departments.get(String(receivingDepartment));
       if (!department) {
         throw new CustomAPIError.BadRequestError(
           `No Department found with id: ${receivingDepartment}`

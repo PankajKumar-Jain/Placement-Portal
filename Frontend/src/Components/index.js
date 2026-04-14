@@ -16,6 +16,7 @@ export { default as ScoreFieldInput } from './FormControls/ScoreFieldInput';
 /* STUDENT */
 export { default as StudentIntro } from './Student/StudentIntro';
 export { default as StudentPersonal } from './Student/StudentPersonal';
+export { default as ChangePassword } from './Student/ChangePassword';
 export { default as StudentEducation } from './Student/StudentEducation';
 export { default as StudentExperience } from './Student/StudentExperience';
 export { default as StudentPlacement } from './Student/StudentPlacement';

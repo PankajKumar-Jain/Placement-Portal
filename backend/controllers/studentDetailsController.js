@@ -38,6 +38,7 @@ const updatePersonalData = async (req, res) => {
     pincode,
     district,
     state,
+    dateOfBirth,
   } = req.body;
 
   const studentId = req.user.userId;
@@ -57,6 +58,7 @@ const updatePersonalData = async (req, res) => {
   if (fatherName !== undefined) updatePayload.fatherName = fatherName;
   if (motherName !== undefined) updatePayload.motherName = motherName;
   if (contactNumber !== undefined) updatePayload.contactNumber = contactNumber;
+  if (dateOfBirth !== undefined) updatePayload.dateOfBirth = dateOfBirth;
 
   const addressPayload = {};
   if (locality !== undefined) addressPayload.locality = locality;
@@ -982,6 +984,51 @@ async function updateCurrentScoreRecord(data, label) {
   return lastErrorObject;
 }
 
+const changePassword = async (req, res) => {
+  const { oldPassword, newPassword, confirmPassword } = req.body;
+  const userId = req.user.userId;
+
+  if (!oldPassword?.trim()) {
+    throw new CustomAPIError.BadRequestError('Old password is required');
+  }
+  if (!newPassword?.trim()) {
+    throw new CustomAPIError.BadRequestError('New password is required');
+  }
+  if (!confirmPassword?.trim()) {
+    throw new CustomAPIError.BadRequestError('Confirm password is required');
+  }
+
+  if (newPassword !== confirmPassword) {
+    throw new CustomAPIError.BadRequestError(
+      'New password and confirm password do not match'
+    );
+  }
+
+  if (newPassword.length < 8) {
+    throw new CustomAPIError.BadRequestError(
+      'Password must be at least 8 characters long'
+    );
+  }
+
+  const user = await UserModel.findById(userId);
+  if (!user) {
+    throw new CustomAPIError.NotFoundError('User not found');
+  }
+
+  const isPasswordCorrect = await user.comparePassword(oldPassword);
+  if (!isPasswordCorrect) {
+    throw new CustomAPIError.BadRequestError('Old password is incorrect');
+  }
+
+  user.password = newPassword;
+  await user.save();
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    message: 'Password changed successfully',
+  });
+};
+
 module.exports = {
   getEducationData,
   updateEducationData,
@@ -1018,4 +1065,6 @@ module.exports = {
   updateAchievement,
   deleteAchievement,
   getAchievements,
+
+  changePassword,
 };

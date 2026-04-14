@@ -5,13 +5,16 @@ const StudentPersonal = () => {
   const personalDetails = useLoaderData().profileDetails?.personalDetails;
   const submit = useSubmit();
 
-  let fatherName, motherName, contactNumber, address;
+  let fatherName, motherName, contactNumber, address, dateOfBirth;
 
   if (personalDetails) {
     fatherName = personalDetails.fatherName;
     motherName = personalDetails.motherName;
     contactNumber = personalDetails.contactNumber;
     address = personalDetails.address;
+    dateOfBirth = personalDetails.dateOfBirth
+      ? new Date(personalDetails.dateOfBirth).toISOString().split('T')[0]
+      : '';
   }
 
   const handlePhotoSelect = (event) => {
@@ -56,6 +59,12 @@ const StudentPersonal = () => {
               type="text"
               label="Mother's Name"
               defaultValue={motherName}
+            />
+            <SimpleFormInput
+              name="dateOfBirth"
+              type="date"
+              label="Date of Birth"
+              defaultValue={dateOfBirth}
             />
             <SimpleFormInput
               name="locality"

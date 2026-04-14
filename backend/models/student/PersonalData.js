@@ -81,6 +81,11 @@ const PersonalDataSchema = new mongoose.Schema(
       type: AddressSchema,
       required: [true, 'Address is required'],
     },
+
+    dateOfBirth: {
+      type: Date,
+      trim: true,
+    },
   },
   { versionKey: false, timestamps: true, collection: 'StudentPersonalData' }
 );

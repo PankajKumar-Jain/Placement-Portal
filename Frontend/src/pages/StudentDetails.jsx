@@ -27,6 +27,7 @@ import {
 import {
   StudentIntro,
   StudentPersonal,
+  ChangePassword,
   StudentEducation,
   StudentExperience,
   StudentPlacement,
@@ -77,6 +78,27 @@ export const action = (queryClient, store) => {
         const errorMessage =
           error?.response?.data?.message ||
           'Failed to update personal details!';
+        toast.error(errorMessage);
+        return error;
+      }
+    }
+
+    /* CHANGE PASSWORD */
+    if (intent === 'changePassword') {
+      const url = `/student/change-password`;
+      try {
+        await customFetch.post(url, {
+          oldPassword: formData.get('oldPassword'),
+          newPassword: formData.get('newPassword'),
+          confirmPassword: formData.get('confirmPassword'),
+        });
+        toast.success('Password changed successfully!');
+        return redirect('/student-dashboard/');
+      } catch (error) {
+        console.log(error);
+        const errorMessage =
+          error?.response?.data?.message ||
+          'Failed to change password!';
         toast.error(errorMessage);
         return error;
       }
@@ -417,6 +439,7 @@ const StudentDetails = () => {
 
       <div role="tablist" className="tabs tabs-lifted">
         <StudentPersonal />
+        <ChangePassword />
         <StudentEducation />
       </div>
 
