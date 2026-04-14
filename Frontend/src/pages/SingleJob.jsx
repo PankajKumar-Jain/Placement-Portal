@@ -317,6 +317,24 @@ const SingleJob = () => {
                 {eligibilityCriteria.graduationCGPA}
               </p>
             )}
+            {eligibilityCriteria?.maxActiveBacklogs !== undefined && eligibilityCriteria?.maxActiveBacklogs !== null && (
+              <p>
+                <span className="font-medium">Max Active Backlogs:</span>{' '}
+                {eligibilityCriteria.maxActiveBacklogs}
+              </p>
+            )}
+            {eligibilityCriteria?.maxCompletedBacklogs !== undefined && eligibilityCriteria?.maxCompletedBacklogs !== null && (
+              <p>
+                <span className="font-medium">Max Completed Backlogs:</span>{' '}
+                {eligibilityCriteria.maxCompletedBacklogs}
+              </p>
+            )}
+            {eligibilityCriteria?.maxDOB && (
+              <p>
+                <span className="font-medium">Minimum Age:</span>{' '}
+                {Math.floor((new Date() - new Date(eligibilityCriteria.maxDOB)) / (365.25 * 24 * 60 * 60 * 1000))} years
+              </p>
+            )}
           </div>
 
           {role === 'student' &&

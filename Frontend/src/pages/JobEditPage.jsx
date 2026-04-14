@@ -47,6 +47,9 @@ export const action = (queryClient, store) => {
         'diplomaPercentage',
         'graduationPercentage',
         'graduationCGPA',
+        'maxActiveBacklogs',
+        'maxCompletedBacklogs',
+        'maxDOB',
       ];
       criteria.forEach((field) => {
         if (data[field] === '' || data[field] === null) {
@@ -314,6 +317,32 @@ const JobEditPage = () => {
                 step={0.1}
                 required={false}
                 defaultValue={jobData?.eligibilityCriteria?.graduationCGPA}
+              />
+            </div>
+
+            <NumberInput
+              label="Max Active Backlogs"
+              name="maxActiveBacklogs"
+              minValue={0}
+              required={false}
+              defaultValue={jobData?.eligibilityCriteria?.maxActiveBacklogs}
+            />
+
+            <NumberInput
+              label="Max Completed Backlogs"
+              name="maxCompletedBacklogs"
+              minValue={0}
+              required={false}
+              defaultValue={jobData?.eligibilityCriteria?.maxCompletedBacklogs}
+            />
+
+            <div className="col-span-2">
+              <DateInput
+                label="Eligible DOB On or Before"
+                name="maxDOB"
+                minDate="1900-01-01"
+                required={false}
+                defaultValue={jobData?.eligibilityCriteria?.maxDOB?.slice(0, 10)}
               />
             </div>
 
