@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { Form, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -19,8 +19,25 @@ const Announcements = () => {
   const [deptOptions, setDeptOptions] = useState([]);
   const [batchOptions, setBatchOptions] = useState([]);
 
+  const queryClient = useQueryClient();
   const { data, isLoading } = useQuery(fetchAnnouncements());
   const announcements = data?.notices ?? [];
+
+  const handleDeleteAnnouncement = async (id) => {
+    const confirmed = window.confirm('Delete this announcement for all students?');
+    if (!confirmed) return;
+
+    try {
+      await customFetch.delete(`/notice/${id}`);
+      queryClient.removeQueries({ queryKey: ['announcements'] });
+      toast.success('Announcement deleted successfully!');
+    } catch (error) {
+      console.log(error);
+      const message =
+        error?.response?.data?.message || error?.message || 'Failed to delete announcement!';
+      toast.error(message);
+    }
+  };
 
   useEffect(() => {
     if (!selectedCourse || selectedCourse === '-1') {
@@ -232,14 +249,23 @@ const Announcements = () => {
                 className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
               >
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                  <h5 className="text-lg font-semibold">{announcement.noticeTitle}</h5>
-                  <div className="flex items-center gap-2">
+                  <div>
+                    <h5 className="text-lg font-semibold">{announcement.noticeTitle}</h5>
                     {announcement.isUrgent && (
-                      <span className="badge badge-error">Urgent</span>
+                      <span className="badge badge-error mt-2 inline-block">Urgent</span>
                     )}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="text-sm text-gray-500">
                       {new Date(announcement.createdAt).toLocaleString()}
                     </span>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline btn-error"
+                      onClick={() => handleDeleteAnnouncement(announcement._id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
                 <p className="mt-3 text-gray-700">{announcement.noticeBody}</p>
