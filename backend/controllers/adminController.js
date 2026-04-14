@@ -167,6 +167,22 @@ const deleteSingleStudent = async (req, res) => {
   if (!user)
     throw new CustomAPIError.NotFoundError(`No student found with id: ${id}`);
 
+  const jobApplications = await JobApplicationModel.find({ applicantId: id }).select(
+    '_id jobId'
+  );
+  const applicationIds = jobApplications.map((application) => application._id);
+
+  const acceptedOffers = await OfferModel.find({
+    studentId: id,
+    status: 'accepted',
+  }).select('companyId');
+
+  const companyDecrement = acceptedOffers.reduce((acc, offer) => {
+    const companyId = offer.companyId?.toString();
+    if (companyId) acc[companyId] = (acc[companyId] || 0) + 1;
+    return acc;
+  }, {});
+
   await Promise.all([
     JobApplicationModel.deleteMany({ applicantId: id }),
     OfferModel.deleteMany({ studentId: id }),
@@ -185,6 +201,7 @@ const deleteSingleStudent = async (req, res) => {
           { shortlistedCandidates: id },
           { selectedCandidates: id },
           { rejectedCandidates: id },
+          { applications: { $in: applicationIds } },
         ],
       },
       {
@@ -193,10 +210,23 @@ const deleteSingleStudent = async (req, res) => {
           shortlistedCandidates: id,
           selectedCandidates: id,
           rejectedCandidates: id,
+          applications: { $in: applicationIds },
         },
       }
     ),
   ]);
+
+  await Promise.all(
+    Object.entries(companyDecrement).map(async ([companyId, count]) => {
+      const company = await CompanyModel.findById(companyId);
+      if (!company) return;
+      company.candidatesHired = Math.max(
+        0,
+        (company.candidatesHired || 0) - count
+      );
+      await company.save();
+    })
+  );
 
   res.status(StatusCodes.OK).json({
     success: true,
