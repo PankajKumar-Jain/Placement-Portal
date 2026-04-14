@@ -126,6 +126,6 @@ Ensure uniqueness of batches and departments in each course
 
 const CourseModel = mongoose.model('Course', CourseSchema);
 const DepartmentModel = mongoose.model('Department', DepartmentSchema);
-const BatchModel = mongoose.model('Batches', BatchSchema);
+const BatchModel = mongoose.model('Batch', BatchSchema);
 
 module.exports = { CourseModel, DepartmentModel, BatchModel };
