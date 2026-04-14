@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTAE Udaipur | Campus Placement Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --navy:#071320;--navy-mid:#0d1f38;--navy-light:#163060;--navy-glow:#1a3d7a;
+  --blue:#86efac;--blue-light:#a8e6c1;--blue-bright:#4ade80;
+  --gold:#f59e0b;--gold-light:#fcd34d;
+  --white:#ffffff;--off-white:#f0fdf6;
+  --text-muted:#86efac;--text-muted2:#a8e6c1;
+  --accent:#4ade80;--card-bg:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.09);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:#fff;overflow-x:hidden;cursor:none}
+.container{max-width:1340px;margin:0 auto;padding:0 3rem}
+
+/* ─── CURSOR ─── */
+#cur{width:10px;height:10px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference}
+#cur.hov{width:32px;height:32px;background:var(--accent)}
+#cring{width:44px;height:44px;border:1.5px solid rgba(134,239,172,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform .12s ease}
+#cglow{width:140px;height:140px;background:radial-gradient(circle,rgba(26,86,219,.12) 0%,transparent 70%);border-radius:50%;position:fixed;pointer-events:none;z-index:99997;transform:translate(-50%,-50%)}
+
+/* ─── PRELOADER ─── */
+#pre{position:fixed;inset:0;z-index:99996;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s}
+#pre.gone{opacity:0;visibility:hidden}
+.pre-ring{width:80px;height:80px;border-radius:50%;border:3px solid rgba(134,239,172,.3);border-top-color:var(--blue-bright);animation:spin 1s linear infinite;margin-bottom:1.5rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pre-logo{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:#86efac;margin-bottom:1.5rem;letter-spacing:.06em}
+.pre-bar{width:220px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-bottom:1rem}
+.pre-fill{height:100%;background:linear-gradient(90deg,#86efac,#4ade80);animation:pFill 2s ease forwards}
+@keyframes pFill{from{width:0}to{width:100%}}
+.pre-txt{font-size:.68rem;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase}
+
+/* ─── BACK TOP ─── */
+#bktop{position:fixed;bottom:2rem;right:2rem;z-index:500;width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#86efac,#4ade80);border:none;color:#071320;font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:none;box-shadow:0 8px 25px rgba(74,222,128,.4);opacity:0;transform:translateY(20px);pointer-events:none;transition:all .35s}
+#bktop.show{opacity:1;transform:none;pointer-events:all}
+#bktop:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(74,222,128,.55)}
+
+/* ─── NAVBAR ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:72px;background:rgba(7,19,32,.88);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.06);transition:all .4s}
+nav.sc{height:60px;background:rgba(7,19,32,.98);box-shadow:0 4px 30px rgba(0,0,0,.5);border-bottom-color:rgba(201,168,76,.15)}
+.nbrand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nlogo{width:46px;height:46px;border-radius:10px;background:#fff;padding:3px;object-fit:contain;box-shadow:0 0 20px rgba(201,168,76,.3);flex-shrink:0;transition:transform .35s ease}
+.nlogo:hover{transform:rotate(-8deg) scale(1.08)}
+.nlogo-fb{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:var(--navy);box-shadow:0 0 20px rgba(201,168,76,.4);flex-shrink:0}
+.ntitle{display:flex;flex-direction:column}
+.ntitle .t1{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:#fff;line-height:1.15}
+.ntitle .t2{font-size:.6rem;color:#86efac;letter-spacing:.12em;text-transform:uppercase}
+.nlinks{display:flex;align-items:center;list-style:none}
+.nlinks a{text-decoration:none;color:rgba(255,255,255,.58);font-size:.8rem;font-weight:500;padding:6px 13px;border-radius:6px;letter-spacing:.02em;transition:color .25s;position:relative}
+.nlinks a::after{content:'';position:absolute;bottom:1px;left:13px;right:13px;height:1.5px;background:var(--gold);transform:scaleX(0);transform-origin:center;transition:transform .3s}
+.nlinks a:hover{color:#fff}
+.nlinks a:hover::after{transform:scaleX(1)}
+.ncta{background:linear-gradient(135deg,var(--gold),var(--gold-light))!important;color:var(--navy)!important;font-weight:700!important;padding:7px 20px!important;border-radius:8px!important;box-shadow:0 4px 18px rgba(201,168,76,.35);transition:all .25s!important}
+.ncta:hover{transform:translateY(-2px)!important;box-shadow:0 8px 28px rgba(201,168,76,.55)!important}
+.ncta::after{display:none!important}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none}
+.hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+.mob-menu{position:fixed;top:72px;left:0;right:0;bottom:0;background:rgba(7,19,32,.98);z-index:999;display:flex;flex-direction:column;padding:2rem;transform:translateX(110%);transition:transform .4s cubic-bezier(.77,0,.175,1);border-top:1px solid rgba(201,168,76,.12)}
+.mob-menu.open{transform:translateX(0)}
+.mob-menu a{font-size:1.1rem;font-weight:600;color:rgba(255,255,255,.7);text-decoration:none;padding:1.1rem 0;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;transition:color .25s}
+.mob-menu a i{color:var(--gold);width:20px}
+.mob-menu a:hover{color:var(--gold)}
+
+/* ─── HERO ─── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,rgba(7,19,32,.97) 0%,rgba(13,31,56,.88) 45%,rgba(7,19,32,.97) 100%),url('mpuat campus.webp') center/cover no-repeat}
+.hero-mesh{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 60% 60% at 78% 50%,rgba(74,222,128,.14),transparent 60%),radial-gradient(ellipse 40% 40% at 10% 80%,rgba(245,158,11,.09),transparent 50%);animation:meshA 9s ease-in-out infinite alternate}
+@keyframes meshA{0%{opacity:.6;transform:scale(1)}100%{opacity:1;transform:scale(1.06)}}
+.hero-grid{position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:70px 70px;animation:gridP 22s linear infinite}
+@keyframes gridP{0%{background-position:0 0}100%{background-position:70px 70px}}
+.orbs{position:absolute;inset:0;z-index:1;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.13;animation:orbF ease-in-out infinite alternate}
+.o1{width:560px;height:560px;background:#86efac;top:-130px;right:-100px;animation-duration:11s}
+.o2{width:380px;height:380px;background:#f59e0b;bottom:-80px;left:-80px;animation-duration:14s}
+.o3{width:260px;height:260px;background:#4ade80;top:38%;left:42%;animation-duration:8s}
+@keyframes orbF{0%{transform:translate(0,0) scale(1)}100%{transform:translate(45px,35px) scale(1.12)}}
+.hptcs{position:absolute;inset:0;z-index:2;overflow:hidden}
+.ptc{position:absolute;border-radius:50%;animation:ptcR linear infinite;opacity:0}
+@keyframes ptcR{0%{transform:translateY(110vh) translateX(0) rotate(0);opacity:0}5%{opacity:.8}90%{opacity:.2}100%{transform:translateY(-10vh) translateX(var(--d)) rotate(540deg);opacity:0}}
+
+.hero-content{position:relative;z-index:3;width:100%;max-width:1340px;margin:0 auto;padding:100px 3rem 3rem;display:grid;grid-template-columns:1.1fr .9fr;gap:4.5rem;align-items:center;min-height:100vh}
+
+/* College identity */
+.coll-id{display:flex;align-items:center;gap:1.5rem;margin-bottom:1.8rem;animation:fIU .9s .3s both}
+.coll-logo{width:88px;height:88px;flex-shrink:0;background:#fff;border-radius:14px;padding:5px;object-fit:contain;box-shadow:0 0 40px rgba(201,168,76,.3),0 0 80px rgba(26,86,219,.18);animation:lPulse 3s ease-in-out infinite;order:2}
+.coll-logo-fb{width:88px;height:88px;flex-shrink:0;background:linear-gradient(135deg,var(--navy-light),var(--blue));border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--gold);box-shadow:0 0 40px rgba(201,168,76,.3);animation:lPulse 3s ease-in-out infinite;order:2}
+@keyframes lPulse{0%,100%{box-shadow:0 0 30px rgba(201,168,76,.3),0 0 60px rgba(26,86,219,.15)}50%{box-shadow:0 0 55px rgba(201,168,76,.5),0 0 110px rgba(26,86,219,.3)}}
+.coll-name{order:1}
+.coll-name h2{font-family:'Playfair Display',serif;font-size:clamp(1rem,2.1vw,1.45rem);font-weight:900;line-height:1.25;color:#fff}
+.coll-name h2 span{color:var(--gold)}
+.coll-name p{font-size:.7rem;color:var(--text-muted);margin-top:4px;letter-spacing:.06em}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(134,239,172,.12);border:1px solid rgba(134,239,172,.35);padding:6px 16px;border-radius:50px;font-size:.7rem;font-weight:700;color:#86efac;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.2rem;animation:fIU .9s .5s both}
+.hero-badge .dot{width:6px;height:6px;background:#86efac;border-radius:50%;animation:blnk 1.5s infinite}
+@keyframes blnk{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.65)}}
+.hero-tagline{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.6rem);font-weight:900;line-height:1.1;margin-bottom:1.2rem;animation:fIU .9s .6s both}
+.hlg{color:#f59e0b}
+.hlb{background:linear-gradient(90deg,#86efac,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:.94rem;color:rgba(255,255,255,.58);line-height:1.75;margin-bottom:2.2rem;max-width:540px;animation:fIU .9s .75s both}
+.hero-stats{display:flex;gap:2.5rem;margin-bottom:2.5rem;animation:fIU .9s .9s both}
+.hstat .num{font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;color:#86efac;line-height:1;display:flex;align-items:flex-start}
+.hstat .lbl{font-size:.7rem;color:var(--text-muted);margin-top:4px}
+.hstat .pfx{font-size:1rem;margin-top:5px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fIU .9s 1.05s both}
+.btn-p{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);font-weight:700;font-size:.88rem;padding:13px 28px;border-radius:10px;border:none;cursor:none;box-shadow:0 8px 30px rgba(201,168,76,.4);transition:all .3s;display:inline-flex;align-items:center;gap:8px;text-decoration:none;position:relative;overflow:hidden}
+.btn-p::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:left .5s}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 14px 45px rgba(201,168,76,.55)}
+.btn-p:hover::after{left:100%}
+.btn-o{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.2);color:#fff;font-weight:500;font-size:.88rem;padding:13px 28px;border-radius:10px;cursor:none;transition:all .3s;display:inline-flex;align-items:center;gap:8px;text-decoration:none;backdrop-filter:blur(10px)}
+.btn-o:hover{border-color:var(--accent);background:rgba(56,189,248,.1);transform:translateY(-3px)}
+
+/* LOGIN PANEL */
+.hero-right{animation:fIR 1s .6s both}
+.lp{background:rgba(13,31,56,.78);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:2.2rem;backdrop-filter:blur(30px);box-shadow:0 25px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden}
+.lp::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),#86efac,#4ade80,var(--gold));background-size:300% 100%;animation:shimA 3s linear infinite}
+@keyframes shimA{0%{background-position:0%}100%{background-position:300%}}
+.lp-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;margin-bottom:1.5rem;color:#fff;text-align:center}
+.ltabs{display:flex;gap:5px;margin-bottom:1.8rem;background:rgba(7,19,32,.6);padding:5px;border-radius:12px}
+.tbtn{flex:1;padding:9px 10px;background:transparent;border:none;cursor:none;border-radius:9px;font-size:.77rem;font-weight:700;color:var(--text-muted);letter-spacing:.03em;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'DM Sans',sans-serif}
+.tbtn.act{background:linear-gradient(135deg,var(--blue),var(--blue-light));color:#fff;box-shadow:0 4px 15px rgba(26,86,219,.4)}
+.tcont{display:none}
+.tcont.act{display:block;animation:tabA .35s cubic-bezier(.25,.46,.45,.94)}
+@keyframes tabA{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:.7rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;letter-spacing:.07em;text-transform:uppercase}
+.fg input{width:100%;padding:11px 14px;background:rgba(7,19,32,.7);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:.88rem;transition:all .25s;outline:none}
+.fg input:focus{border-color:var(--blue-bright);box-shadow:0 0 0 3px rgba(96,165,250,.15)}
+.fg input::placeholder{color:rgba(122,156,191,.45)}
+.fsub{width:100%;padding:12px;margin-top:.5rem;background:linear-gradient(135deg,var(--blue),var(--blue-light));border:none;color:#fff;font-weight:700;font-size:.88rem;border-radius:10px;cursor:none;font-family:'DM Sans',sans-serif;box-shadow:0 8px 25px rgba(26,86,219,.4);transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden}
+.fsub::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .5s}
+.fsub:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(26,86,219,.55)}
+.fsub:hover::after{left:100%}
+.ffoot{text-align:center;margin-top:.8rem;font-size:.73rem;color:var(--text-muted)}
+.ffoot a{color:#86efac;text-decoration:none}
+
+/* ROLE BUTTONS */
+.role-btns{display:flex;flex-direction:column;gap:.9rem}
+.role-btn{width:100%;display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09);border-radius:14px;cursor:none;font-family:'DM Sans',sans-serif;transition:all .3s;position:relative;overflow:hidden;text-align:left}
+.role-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(134,239,172,.1),rgba(74,222,128,.06));opacity:0;transition:opacity .3s;border-radius:14px}
+.role-btn:hover{border-color:rgba(134,239,172,.5);transform:translateX(5px);box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.role-btn:hover::before{opacity:1}
+.role-btn-icon{width:48px;height:48px;border-radius:12px;background:rgba(134,239,172,.15);border:1.5px solid rgba(134,239,172,.35);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--blue-bright);flex-shrink:0;transition:all .3s}
+.role-btn-icon.recruiter{background:rgba(245,158,11,.15);border-color:rgba(252,211,77,.25);color:var(--gold-light)}
+.role-btn-icon.admin{background:rgba(13,148,136,.2);border-color:rgba(45,212,191,.25);color:var(--accent)}
+.role-btn:hover .role-btn-icon{transform:scale(1.1) rotate(-5deg)}
+.role-btn-text{flex:1;display:flex;flex-direction:column;gap:2px}
+.role-btn-title{font-size:.95rem;font-weight:700;color:#fff;line-height:1}
+.role-btn-sub{font-size:.72rem;color:var(--text-muted)}
+.role-btn-arrow{color:var(--text-muted);font-size:.8rem;transition:all .3s;flex-shrink:0}
+.role-btn:hover .role-btn-arrow{color:var(--blue-bright);transform:translateX(4px)}
+
+/* MARQUEE */
+.mqbar{background:linear-gradient(90deg,#34d399,#86efac,#4ade80,#34d399);background-size:300% 100%;animation:mqG 6s linear infinite;padding:10px 0;overflow:hidden}
+@keyframes mqG{0%{background-position:0%}100%{background-position:300%}}
+.mq-track{display:flex;width:max-content;animation:mqS 35s linear infinite}
+.mq-track:hover{animation-play-state:paused}
+@keyframes mqS{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.mqitem{white-space:nowrap;padding:0 2rem;font-size:.77rem;font-weight:700;color:#fff;letter-spacing:.06em;display:flex;align-items:center;gap:10px}
+.mqdot{width:4px;height:4px;background:rgba(255,255,255,.5);border-radius:50%}
+
+/* ─── SECTION HELPERS ─── */
+.sec{padding:6rem 0}
+.stag{display:inline-flex;align-items:center;gap:8px;font-size:.68rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#86efac;margin-bottom:.8rem}
+.stag::before{content:'';width:22px;height:2px;background:#86efac}
+.stag.cen{justify-content:center}
+.stag.acc{color:#a8e6c1}
+.stag.acc::before{background:#a8e6c1}
+.stitle{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.2vw,2.6rem);font-weight:900;line-height:1.15;margin-bottom:1rem;color:#fff}
+.stitle .hlg{color:#f59e0b}
+.stitle .hlb{color:#86efac}
+.sdesc{color:var(--text-muted);line-height:1.75;font-size:.92rem;margin-bottom:1.5rem}
+
+/* ─── ABOUT (navy-mid) ─── */
+#about{background:var(--navy-mid)}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.aimg-wrap{position:relative}
+.aimg{width:100%;height:420px;border-radius:20px;object-fit:cover;border:1px solid rgba(201,168,76,.2);box-shadow:0 30px 80px rgba(0,0,0,.4);transition:transform .5s}
+.aimg:hover{transform:scale(1.02)}
+.aimg-glow{position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(26,86,219,.1),transparent);pointer-events:none}
+.abadge{position:absolute;bottom:-18px;right:20px;background:linear-gradient(135deg,#4ade80,#86efac);color:#071320;padding:1rem 1.5rem;border-radius:14px;box-shadow:0 10px 40px rgba(26,86,219,.5);text-align:center}
+.abadge .n{font-family:'Space Mono',monospace;font-size:1.8rem;font-weight:700;line-height:1}
+.abadge .l{font-size:.67rem;font-weight:700;letter-spacing:.05em;opacity:.85}
+.adecor{position:absolute;top:-18px;left:-18px;width:78px;height:78px;border:3px solid rgba(134,239,172,.35);border-radius:12px;animation:rotD 10s linear infinite}
+.adecor2{position:absolute;top:-8px;left:-8px;width:55px;height:55px;border:1.5px dashed rgba(74,222,128,.2);border-radius:8px;animation:rotD 16s linear infinite reverse}
+@keyframes rotD{to{transform:rotate(360deg)}}
+
+/* 2×2 HIGHLIGHTS GRID */
+.hls{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.8rem}
+.hlc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-left:3px solid #86efac;border-radius:14px;padding:1.2rem;transition:all .35s;cursor:default}
+.hlc:hover{transform:translateY(-5px);border-color:rgba(134,239,172,.4);border-left-color:#4ade80;background:rgba(201,168,76,.06);box-shadow:0 12px 35px rgba(0,0,0,.25)}
+.hlc i{color:#86efac;font-size:1.3rem;margin-bottom:.5rem;display:block;transition:color .3s,transform .3s}
+.hlc:hover i{color:#4ade80;transform:scale(1.2) rotate(-5deg)}
+.hlc h4{font-size:.88rem;font-weight:700;margin-bottom:3px;color:#fff}
+.hlc p{font-size:.75rem;color:var(--text-muted)}
+
+/* ─── WHY RECRUIT (navy) ─── */
+#recruit{background:var(--navy)}
+.rhead{text-align:center;margin-bottom:4rem}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.rcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:2rem;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.25,.46,.45,.94);cursor:default}
+.rcard::before{content:'';position:absolute;inset:0;border-radius:18px;background:linear-gradient(135deg,rgba(26,86,219,.1),rgba(201,168,76,.05));opacity:0;transition:opacity .4s}
+.rcard::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),#2dd4bf);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.rcard:hover{transform:translateY(-8px);border-color:rgba(96,165,250,.25);box-shadow:0 25px 60px rgba(0,0,0,.3)}
+.rcard:hover::before{opacity:1}
+.rcard:hover::after{transform:scaleX(1)}
+.rico{width:56px;height:56px;border-radius:14px;background:rgba(134,239,172,.1);border:1px solid rgba(134,239,172,.25);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#86efac;margin-bottom:1.2rem;transition:all .3s}
+.rcard:hover .rico{background:rgba(134,239,172,.18);transform:rotate(-6deg) scale(1.12)}
+.rcard h3{font-size:1rem;font-weight:700;margin-bottom:.6rem}
+.rcard p{font-size:.82rem;color:var(--text-muted);line-height:1.65}
+
+/* ─── RECRUITERS (navy-mid) ─── */
+#recruiters{background:var(--navy-mid);padding:4rem 0}
+.recmq{overflow:hidden;margin-top:2.5rem}
+.rec-track{display:flex;gap:1.2rem;width:max-content;animation:mqS 22s linear infinite}
+.rec-track:hover{animation-play-state:paused}
+.rlogo{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem 2rem;display:flex;align-items:center;justify-content:center;min-width:160px;height:68px;font-weight:700;font-size:.82rem;color:var(--text-muted);white-space:nowrap;transition:all .35s}
+.rlogo:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.07);transform:translateY(-4px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
+
+/* ─── PLACEMENTS (navy) ─── */
+#placements{background:var(--navy)}
+.plflex{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.bsec-ttl{font-size:.68rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#86efac;margin-bottom:1.2rem;display:flex;align-items:center;gap:8px}
+.bsec-ttl::before{content:'';width:18px;height:2px;background:#86efac}
+.bstack{display:flex;flex-direction:column;gap:.9rem}
+.bcard{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:14px;padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1rem;text-decoration:none;color:#fff;transition:all .35s;position:relative;overflow:hidden}
+.bcard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#86efac;transform:scaleY(0);transition:transform .3s}
+.bcard:hover{border-color:rgba(134,239,172,.4);transform:translateX(7px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.bcard:hover::before{transform:scaleY(1)}
+.bicon{width:44px;height:44px;flex-shrink:0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.bicon.new{background:rgba(134,239,172,.12);color:#86efac}
+.bicon.old{background:rgba(201,168,76,.12);color:var(--gold)}
+.binfo h4{font-size:.87rem;font-weight:700;margin-bottom:2px}
+.binfo p{font-size:.7rem;color:var(--text-muted)}
+.barrow{margin-left:auto;color:#86efac;font-size:.85rem;transition:transform .3s}
+.bcard:hover .barrow{transform:translateX(5px)}
+.bnew{position:absolute;top:8px;right:8px;background:#4ade80;color:#071320!important;color:#fff;font-size:.58rem;font-weight:800;letter-spacing:.1em;padding:2px 7px;border-radius:4px;animation:bpulse 2s infinite}
+@keyframes bpulse{0%,100%{box-shadow:0 0 0 0 rgba(26,86,219,.5)}50%{box-shadow:0 0 0 6px rgba(26,86,219,0)}}
+
+/* Key stats (2×2) */
+.ksgrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.kscard{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:14px;padding:1.5rem;text-align:center;transition:all .35s;position:relative;overflow:hidden;cursor:default}
+.kscard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#86efac,#4ade80);transform:scaleX(0);transition:transform .35s}
+.kscard:hover{border-color:rgba(201,168,76,.35);transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.3)}
+.kscard:hover::after{transform:scaleX(1)}
+.kscard .knum{font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;color:#86efac;display:block;line-height:1;margin-bottom:4px}
+.kscard .klbl{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.7)}
+.kscard .kyr{font-size:.65rem;color:var(--text-muted);margin-top:3px}
+
+
+/* ===============================
+   GUIDELINES SECTION
+================================= */
+
+#guidelines{
+  background:var(--navy-mid);
+  position:relative;
+}
+
+/* Timeline Wrapper */
+.tlwrap{
+  position:relative;
+  max-width:1000px;
+  margin:0 auto;
+  padding:0.5rem 0;
+}
+
+/* Center Vertical Line */
+.tlwrap::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:3px;
+  background:linear-gradient(180deg,var(--blue),var(--accent),transparent);
+  transform:translateX(-50%);
+  opacity:.8;
+}
+
+/* Timeline Item */
+.tli{
+  display:flex;
+  position:relative;
+  margin-bottom:1.6rem;
+  width:100%;
+}
+
+/* Alternate Layout */
+.tli:nth-child(odd){
+  justify-content:flex-start;
+}
+
+.tli:nth-child(even){
+  justify-content:flex-end;
+}
+
+/* Timeline Card */
+.tlb{
+  width:42%;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  padding:0.9rem 1.2rem;
+  transition:all .7s cubic-bezier(.25,.46,.45,.94);
+  backdrop-filter:blur(10px);
+  opacity:0;
+  text-align:left;
+}
+
+/* Slide Animation Initial State */
+.tli:nth-child(odd) .tlb{
+  transform:translateX(-120px);
+}
+
+.tli:nth-child(even) .tlb{
+  transform:translateX(120px);
+  /* text-align:right; */
+}
+
+/* When Visible */
+.tli.show .tlb{
+  opacity:1;
+  transform:translateX(0);
+}
+
+/* Hover Effect */
+.tlb:hover{
+  border-color:rgba(96,165,250,.35);
+  background:rgba(26,86,219,.08);
+  transform:scale(1.03);
+  box-shadow:0 15px 45px rgba(0,0,0,.3);
+}
+
+/* Timeline Dot */
+.tldot{
+  position:absolute;
+  left:50%;
+  top:1.4rem;
+  transform:translateX(-50%);
+  width:18px;
+  height:18px;
+  background:var(--blue);
+  border-radius:50%;
+  border:4px solid var(--navy-mid);
+  box-shadow:
+    0 0 0 4px rgba(26,86,219,.3),
+    0 0 20px rgba(26,86,219,.6);
+  z-index:2;
+  animation:dP 2s ease-in-out infinite;
+}
+
+/* Dot Pulse Animation */
+@keyframes dP{
+  0%,100%{
+    box-shadow:
+      0 0 0 4px rgba(26,86,219,.3),
+      0 0 20px rgba(26,86,219,.6);
+  }
+  50%{
+    box-shadow:
+      0 0 0 8px rgba(26,86,219,.15),
+      0 0 40px rgba(26,86,219,.8);
+  }
+}
+
+/* Step Label */
+.tlstep{
+  font-size:.65rem;
+  font-weight:800;
+  letter-spacing:.15em;
+  color:var(--accent);
+  text-transform:uppercase;
+  margin-bottom:.4rem;
+}
+
+/* Heading */
+.tlb h4{
+  font-size:1rem;
+  font-weight:700;
+  margin-bottom:.5rem;
+  color:#fff;
+}
+
+/* Description */
+.tlb p{
+  font-size:.85rem;
+  color:var(--text-muted);
+  line-height:1.6;
+}
+
+/* Spacer for alignment (kept for structure compatibility) */
+.tlsp{
+  width:42%;
+}
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================= */
+
+@media(max-width:768px){
+
+  .tlwrap::before{
+    left:20px;
+  }
+
+  .tli{
+    justify-content:flex-start !important;
+    margin-bottom:1.2rem;
+  }
+
+  .tlb{
+    width:85%;
+    margin-left:50px;
+    text-align:left !important;
+    transform:translateX(-60px) !important;
+  }
+
+  .tli.show .tlb{
+    transform:translateX(0) !important;
+  }
+
+  .tldot{
+    left:20px;
+  }
+}
+
+/* ─── CONTACT (navy) ─── */
+#contact{background:var(--navy)}
+.cgrid{display:grid;grid-template-columns:1fr;gap:4rem;max-width:900px;margin:0 auto}
+.hdcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:22px;overflow:hidden;margin-bottom:2rem;display:grid;grid-template-columns:auto 1fr;align-items:stretch}
+.hd-top{background:linear-gradient(135deg,var(--navy-light),var(--navy-glow));padding:2rem 2.5rem;text-align:center;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:240px}
+.hphoto-wrap{position:relative;display:inline-block;margin-bottom:1rem;margin-top:.5rem}
+.hphoto{width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.08);border:3px solid #86efac;display:flex;align-items:center;justify-content:center;font-size:2.2rem;color:#86efac;box-shadow:0 0 30px rgba(201,168,76,.4);position:relative;z-index:1}
+.hr1,.hr2{position:absolute;border-radius:50%;border:1.5px dashed}
+.hr1{inset:-8px;border-color:rgba(134,239,172,.45);animation:spn 15s linear infinite}
+.hr2{inset:-16px;border-color:rgba(74,222,128,.2);border-style:dotted;animation:spn 20s linear infinite reverse}
+@keyframes spn{to{transform:rotate(360deg)}}
+.hname{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:3px}
+.hrole{font-size:.77rem;color:#86efac;font-weight:600}
+.hbottom{padding:1.5rem}
+.hcl{display:flex;flex-direction:column;gap:.6rem}
+.hcl-item{display:flex;align-items:center;gap:.8rem;padding:.6rem .8rem;background:rgba(255,255,255,.04);border-radius:8px;font-size:.78rem;color:var(--text-muted)}
+.hcl-item i{color:#86efac;width:14px;flex-shrink:0}
+.comm-ttl{font-size:.68rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#86efac;margin-bottom:1.2rem;display:flex;align-items:center;gap:8px}
+.comm-ttl::before{content:'';width:20px;height:2px;background:#86efac}
+.commgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+.commcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:.9rem 1rem;display:flex;align-items:center;gap:.8rem;transition:all .35s;cursor:default}
+.commcard:hover{border-color:rgba(201,168,76,.35);transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.3)}
+.commav{width:42px;height:42px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,rgba(134,239,172,.12),rgba(74,222,128,.08));border:1px solid rgba(134,239,172,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;color:#86efac}
+.comminfo h4{font-size:.82rem;font-weight:700;line-height:1.2}
+.comminfo p{font-size:.7rem;color:var(--text-muted)}
+.comminfo span{font-size:.65rem;color:#86efac;font-weight:600}
+.cfwrap{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:2.5rem}
+.cf-ttl{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.cf-sub{font-size:.8rem;color:var(--text-muted);margin-bottom:2rem;line-height:1.55}
+.cfwrap .fg label{color:var(--text-muted)}
+.cftarea{width:100%;padding:11px 14px;background:rgba(7,19,32,.7);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:.88rem;transition:all .25s;outline:none;resize:vertical}
+.cftarea:focus{border-color:var(--blue-bright);box-shadow:0 0 0 3px rgba(96,165,250,.15)}
+.cf-acts{display:flex;gap:.8rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08)}
+.cf-act{flex:1;text-align:center;text-decoration:none;padding:.8rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:var(--text-muted);font-size:.76rem;font-weight:600;transition:all .3s}
+.cf-act:hover{background:rgba(134,239,172,.12);border-color:#86efac;color:#fff}
+.cf-act i{display:block;margin-bottom:4px;font-size:1rem;color:#86efac}
+
+/* ─── FOOTER ─── */
+footer{background:var(--navy-mid);border-top:1px solid rgba(255,255,255,.07);padding:4rem 0 2rem}
+.ftop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.flrow{display:flex;align-items:center;gap:12px;margin-bottom:1rem}
+.flogo{width:44px;height:44px;border-radius:10px;padding:3px;background:#fff;object-fit:contain;box-shadow:0 0 15px rgba(201,168,76,.25)}
+.flogo-fb{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:var(--navy)}
+.fbrand h3{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700}
+.fbrand .fs{font-size:.62rem;color:#86efac;letter-spacing:.08em}
+.fbrand p{font-size:.78rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.2rem}
+.slinks{display:flex;gap:.6rem}
+.sl{width:36px;height:36px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:.9rem;text-decoration:none;transition:all .3s}
+.sl:hover{background:#86efac;color:#071320;border-color:#4ade80;transform:translateY(-3px)}
+.fcol h4{font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#fff;margin-bottom:1.2rem}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.flinks a{font-size:.78rem;color:var(--text-muted);text-decoration:none;transition:color .25s;display:flex;align-items:center;gap:6px}
+.flinks a::before{content:'›';color:#86efac;font-size:1rem}
+.flinks a:hover{color:#fff}
+.fbot{border-top:1px solid rgba(255,255,255,.06);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.fbot p{font-size:.74rem;color:var(--text-muted)}
+.fbot span,.fbot a{color:var(--gold);text-decoration:none}
+
+/* ═══════════════════════════════
+   SCROLL & SLIDE ANIMATIONS
+═══════════════════════════════ */
+/* base reveal */
+[data-anim]{
+  opacity:0;
+  transition:opacity .75s cubic-bezier(.25,.46,.45,.94),
+             transform .75s cubic-bezier(.25,.46,.45,.94);
+  will-change:transform,opacity;
+}
+[data-anim="up"]          {transform:translateY(50px)}
+[data-anim="down"]        {transform:translateY(-50px)}
+[data-anim="left"]        {transform:translateX(-60px)}
+[data-anim="right"]       {transform:translateX(60px)}
+[data-anim="scale"]       {transform:scale(.85)}
+[data-anim="rotate"]      {transform:rotate(-8deg) scale(.9)}
+[data-anim="slide-up-far"]{transform:translateY(90px)}
+[data-anim].appeared{opacity:1;transform:none}
+
+/* stagger delays */
+[data-delay="1"]{transition-delay:.08s!important}
+[data-delay="2"]{transition-delay:.16s!important}
+[data-delay="3"]{transition-delay:.24s!important}
+[data-delay="4"]{transition-delay:.32s!important}
+[data-delay="5"]{transition-delay:.40s!important}
+[data-delay="6"]{transition-delay:.48s!important}
+
+/* hero entrance */
+@keyframes fIU{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes fIR{from{opacity:0;transform:translateX(38px)}to{opacity:1;transform:none}}
+
+/* RIPPLE */
+.ripple{position:relative;overflow:hidden}
+.rp-eff{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:rpA .65s linear;pointer-events:none}
+@keyframes rpA{to{transform:scale(4);opacity:0}}
+
+/* Horizontal scroll-slide for recruiter logos row */
+.rlogo{transition:all .35s,transform .4s;opacity:0;transform:translateY(20px)}
+.rlogo.appeared{opacity:1;transform:none}
+
+/* Counter flip */
+.knum{display:inline-block;transition:transform .3s}
+
+/* Section transition overlay */
+.section-reveal-overlay{position:absolute;inset:0;z-index:10;background:var(--navy-mid);transform:scaleY(1);transform-origin:top;transition:transform .7s cubic-bezier(.77,0,.175,1);pointer-events:none}
+.section-entered .section-reveal-overlay{transform:scaleY(0);transform-origin:bottom}
+
+/* Floating decor blobs that move on mousemove */
+.mousemove-blob{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;transition:transform .6s ease}
+
+/* Card shimmer on hover */
+.shimmer-card{background-size:200% 100%;background-image:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.07) 50%,transparent 60%);background-position:200% 0}
+.shimmer-card:hover{animation:shimCard .6s ease forwards}
+@keyframes shimCard{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+  .hero-content{grid-template-columns:1fr;min-height:auto;padding-bottom:3rem}
+  .hero-right{max-width:480px}
+  .agrid,.cgrid,.plflex{grid-template-columns:1fr}
+  .agrid{gap:3rem}
+  .rgrid{grid-template-columns:1fr 1fr}
+  .ftop{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  nav{padding:0 1.2rem}
+  .nlinks{display:none}
+  .hamburger{display:flex}
+  .container{padding:0 1.2rem}
+  .rgrid{grid-template-columns:1fr}
+  .coll-id{flex-direction:column;text-align:center}
+  .tli,.tli:nth-child(even){flex-direction:column;padding-left:50px}
+  .tlb,.tlsp{width:100%}
+  .tli:nth-child(even) .tlb{text-align:left}
+  .tlwrap::before{left:16px}
+  .tldot{left:16px}
+  .ftop{grid-template-columns:1fr}
+  .commgrid{grid-template-columns:1fr 1fr}
+  .hls{grid-template-columns:1fr}
+  .hdcard{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cring"></div>
+<div id="cglow"></div>
+
+<!-- PRELOADER -->
+<div id="pre">
+  <div class="pre-ring"></div>
+  <div class="pre-logo">CTAE</div>
+  <div class="pre-bar"><div class="pre-fill"></div></div>
+  <div class="pre-txt">Loading Placement Portal...</div>
+</div>
+
+<button id="bktop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+
+<!-- ════ NAVBAR ════ -->
+<nav id="nb">
+  <a href="#" class="nbrand">
+    <img src="ctae logo.png" alt="CTAE Logo" class="nlogo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="nlogo-fb" style="display:none">CT</div>
+    <div class="ntitle"><span class="t1">CTAE Udaipur</span><span class="t2">Placement Portal</span></div>
+  </a>
+  <ul class="nlinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About CTAE</a></li>
+    <li><a href="#recruit">Why Recruit</a></li>
+    <li><a href="#placements">Reports</a></li>
+    <li><a href="#guidelines">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hbg"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <a href="#home" onclick="cM()"><i class="fas fa-home"></i>Home</a>
+  <a href="#about" onclick="cM()"><i class="fas fa-university"></i>About CTAE</a>
+  <a href="#recruit" onclick="cM()"><i class="fas fa-handshake"></i>Why Recruit</a>
+  <a href="#placements" onclick="cM()"><i class="fas fa-file-alt"></i>Reports</a>
+  <a href="#guidelines" onclick="cM()"><i class="fas fa-list-check"></i>Process</a>
+  <a href="#contact" onclick="cM()"><i class="fas fa-envelope"></i>Contact</a>
+</div>
+
+<!-- ════ HERO ════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-mesh"></div>
+  <div class="hero-grid"></div>
+  <div class="orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+  <div class="hptcs" id="ptcs"></div>
+
+  <!-- mouse-follow blobs -->
+  <div class="mousemove-blob" id="mb1" style="width:300px;height:300px;background:rgba(74,222,128,.1);top:20%;left:10%;z-index:2"></div>
+  <div class="mousemove-blob" id="mb2" style="width:220px;height:220px;background:rgba(245,158,11,.07);bottom:20%;right:10%;z-index:2"></div>
+
+  <div class="hero-content">
+    <div>
+      <!-- College identity: name on left, logo on right -->
+      <div class="coll-id">
+        <div class="coll-name">
+          <!-- <h2>College of Technology &amp; Engineering, <span>Udaipur</span></h2> -->
+          <h1 class="hero-tagline">
+            College Of Technology & Engineering,<br>
+            <span class="hlb"> Udaipur</span>
+          </h1>
+          <p>MPUAT — Est. 1963 &nbsp;|&nbsp; University Road, Ganpati Nagar, Udaipur (Raj.)</p>
+        </div>
+        <!-- <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e8/CTAE_logo.png/120px-CTAE_logo.png" alt="CTAE Logo" class="coll-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"> -->
+        <!-- <div class="coll-logo-fb" style="display:none">CT</div> -->
+      </div>
+
+      <div class="hero-badge"><span class="dot"></span>Placement Season 2025–26 Now Open</div>
+
+      <!-- <h1 class="hero-tagline">
+        College Of Technology & Engineering,<br>
+        <span class="hlb"> Udaipur</span>
+      </h1> -->
+      <p class="hero-sub">Recruit from a pool of technically skilled, industry-ready graduates across 10+ engineering disciplines. CTAE Udaipur — six decades of academic excellence, one dedicated placement cell.</p>
+
+      <div class="hero-stats">
+        <div class="hstat"><div class="num"><span class="counter" data-t="75">0</span><span>%</span></div><div class="lbl">Placement Rate</div></div>
+        <div class="hstat"><div class="num"><span class="pfx">₹</span><span class="counter" data-t="12">0</span><span>L</span></div><div class="lbl">Highest Package</div></div>
+        <div class="hstat"><div class="num"><span class="counter" data-t="30+">0</span><span>+</span></div><div class="lbl">Recruiters 2024-25</div></div>
+      </div>
+
+
+    </div>
+
+    <div class="hero-right">
+      <div class="lp">
+        <div class="lp-title">🎓 Access Placement Portal</div>
+        <p style="text-align:center;font-size:.84rem;color:var(--text-muted);margin-bottom:2rem;line-height:1.6">Select your role to continue to the placement portal dashboard.</p>
+        <div class="role-btns">
+          <button class="role-btn ripple" onclick="doStudentLogin()">
+            <div class="role-btn-icon"><i class="fas fa-user-graduate"></i></div>
+            <div class="role-btn-text">
+              <span class="role-btn-title">Student</span>
+              <span class="role-btn-sub">View jobs, apply & track status</span>
+            </div>
+            <i class="fas fa-arrow-right role-btn-arrow"></i>
+          </button>
+          <button class="role-btn ripple" onclick="doRecruiterLogin()">
+            <div class="role-btn-icon recruiter"><i class="fas fa-briefcase"></i></div>
+            <div class="role-btn-text">
+              <span class="role-btn-title">Recruiter</span>
+              <span class="role-btn-sub">Post jobs & manage candidates</span>
+            </div>
+            <i class="fas fa-arrow-right role-btn-arrow"></i>
+          </button>
+          <button class="role-btn ripple" onclick="doAdminLogin()">
+            <div class="role-btn-icon admin"><i class="fas fa-shield-halved"></i></div>
+            <div class="role-btn-text">
+              <span class="role-btn-title">Admin</span>
+              <span class="role-btn-sub">Manage portal & placements</span>
+            </div>
+            <i class="fas fa-arrow-right role-btn-arrow"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mqbar">
+  <div class="mq-track">
+    <div class="mqitem"><span class="mqdot"></span>Placement Season 2025-26 is Now Open</div>
+    <div class="mqitem"><span class="mqdot"></span>Highest Package: ₹12 LPA &nbsp;|&nbsp; Average: ₹5 LPA</div>
+    <div class="mqitem"><span class="mqdot"></span>30+ Companies Visited in 2024-25</div>
+    <div class="mqitem"><span class="mqdot"></span>Register Your Company Before July 31, 2026</div>
+    <div class="mqitem"><span class="mqdot"></span>Pre-Placement Talk Schedule Now Available</div>
+    <div class="mqitem"><span class="mqdot"></span>Download Placement Brochure 2025–26</div>
+    <div class="mqitem"><span class="mqdot"></span>Placement Season 2025–26 is Now Open</div>
+    <div class="mqitem"><span class="mqdot"></span>Highest Package: ₹12 LPA &nbsp;|&nbsp; Average: ₹5 LPA</div>
+    <div class="mqitem"><span class="mqdot"></span>30+ Companies Visited in 2024-25</div>
+    <div class="mqitem"><span class="mqdot"></span>Register Your Company Before July 31, 2026</div>
+    <div class="mqitem"><span class="mqdot"></span>Pre-Placement Talk Schedule Now Available</div>
+    <div class="mqitem"><span class="mqdot"></span>Download Placement Brochure 2025–26</div>
+  </div>
+</div>
+
+<!-- ════ ABOUT (navy-mid) ════ -->
+<section id="about" class="sec" style="background:var(--navy-mid);position:relative">
+  <div class="container">
+    <div class="agrid">
+      <div class="aimg-wrap" data-anim="left">
+        <img src="ctaecampus.jpeg" alt="CTAE Campus" class="aimg">
+        <div class="aimg-glow"></div>
+        <div class="abadge"><div class="n">60+</div><div class="l">Years of Excellence</div></div>
+        <div class="adecor"></div><div class="adecor2"></div>
+      </div>
+      <div data-anim="right">
+        <div class="stag">About the Institution</div>
+        <h2 class="stitle">Engineering Excellence <span class="hlg">Since 1964</span></h2>
+        <p class="sdesc">College of Technology and Engineering (CTAE), Udaipur is a constituent college of Maharana Pratap University of Agriculture and Technology (MPUAT). A pioneer in technical education in Rajasthan, CTAE has produced thousands of engineers and leaders who shape industries across India and globally.</p>
+        <p class="sdesc" style="margin-bottom:0">Our campus in the scenic City of Lakes features cutting-edge labs, research facilities, innovation hubs, and vibrant student communities across 10+ engineering disciplines.</p>
+
+        <!-- 2×2 highlight cards -->
+        <div class="hls">
+          <div class="hlc shimmer-card" data-anim="scale" data-delay="1"><i class="fas fa-award"></i><h4>NAAC Accredited</h4><p>Grade A by NAAC, India</p></div>
+          <div class="hlc shimmer-card" data-anim="scale" data-delay="2"><i class="fas fa-flask"></i><h4>10+ Disciplines</h4><p>B.Tech, M.Tech &amp; PhD</p></div>
+          <div class="hlc shimmer-card" data-anim="scale" data-delay="3"><i class="fas fa-users"></i><h4>2000+ Students</h4><p>Active across all programs</p></div>
+          <div class="hlc shimmer-card" data-anim="scale" data-delay="4"><i class="fas fa-industry"></i><h4>Industry Ready</h4><p>Curriculum aligned to industry</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ WHY RECRUIT (navy) ════ -->
+<section id="recruit" class="sec" style="background:var(--navy)">
+  <div class="container">
+    <div class="rhead" data-anim="up">
+      <div class="stag gld cen">Recruitment Advantage</div>
+      <h2 class="stitle" style="text-align:center">Why Choose <span class="hlg">CTAE Udaipur?</span></h2>
+      <p class="sdesc" style="text-align:center;max-width:580px;margin:0 auto">Tap into a diverse talent pool of technically proficient graduates from one of Rajasthan's most prestigious engineering institutions.</p>
+    </div>
+    <div class="rgrid" style="margin-top:3rem">
+      <div class="rcard shimmer-card" data-anim="slide-up-far" data-delay="1"><div class="rico"><i class="fas fa-brain"></i></div><h3>Rigorous Academics</h3><p>Curriculum continuously updated with industry experts, ensuring graduates possess current technical knowledge and real problem-solving skills.</p></div>
+      <div class="rcard shimmer-card" data-anim="slide-up-far" data-delay="2"><div class="rico"><i class="fas fa-sitemap"></i></div><h3>Diverse Disciplines</h3><p>Recruit from CSE, ECE, EE, Mechanical, Civil, IT, Agricultural Engineering and more — 10+ branches, one unified campus.</p></div>
+      <div class="rcard shimmer-card" data-anim="slide-up-far" data-delay="3"><div class="rico"><i class="fas fa-trophy"></i></div><h3>Proven Track Record</h3><p>75%+ placements consistently year on year. Alumni thriving at Infosys, TCS, Vedanta and 50+ other organizations.</p></div>
+      <div class="rcard shimmer-card" data-anim="slide-up-far" data-delay="4"><div class="rico"><i class="fas fa-hands-helping"></i></div><h3>Seamless Coordination</h3><p>Our dedicated T&P Cell handles all logistics — scheduling, infrastructure, shortlisting, documentation — completely end to end.</p></div>
+      <div class="rcard shimmer-card" data-anim="slide-up-far" data-delay="5"><div class="rico"><i class="fas fa-lightbulb"></i></div><h3>Innovation Culture</h3><p>Students with active patents, hackathon wins, and research publications bring a design-first, innovation-oriented mindset to every role.</p></div>
+      <div class="rcard shimmer-card" data-anim="slide-up-far" data-delay="6"><div class="rico"><i class="fas fa-map-marker-alt"></i></div><h3>Strategic Location</h3><p>Udaipur is a growing industrial hub in Rajasthan with expanding manufacturing, IT, and infrastructure sectors in the region.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ RECRUITERS (navy-mid) ════ -->
+<section id="recruiters" style="background:var(--navy-mid);padding:4rem 0">
+  <div class="container">
+    <div data-anim="up" style="text-align:center">
+      <div class="stag acc cen">Our Recruiters</div>
+      <h2 class="stitle" style="text-align:center">Trusted by Leading <span class="hlb">Organizations</span></h2>
+    </div>
+  </div>
+  <div class="recmq">
+    <div class="rec-track" id="rectrack">
+      <div class="rlogo">Vedanta</div><div class="rlogo">Mahindra & Mahindra</div><div class="rlogo">Adani</div>
+      <div class="rlogo">L&amp;T</div><div class="rlogo">App Perfect</div><div class="rlogo">Secure Meters</div>
+      <div class="rlogo">TCS</div><div class="rlogo">Infosys</div><div class="rlogo">JK Cement</div>
+      <div class="rlogo">Wipro</div><div class="rlogo">TATA Motors</div><div class="rlogo">BOSCH Ltd</div>
+      <div class="rlogo">Vedanta</div><div class="rlogo">Mahindra & Mahindra</div><div class="rlogo">Adani</div>
+      <div class="rlogo">L&amp;T</div><div class="rlogo">App Perfect</div><div class="rlogo">Secure Meters</div>
+      <div class="rlogo">TCS</div><div class="rlogo">Infosys</div><div class="rlogo">JK Cement</div>
+      <div class="rlogo">Wipro</div><div class="rlogo">TATA Motors</div><div class="rlogo">BOSCH Ltd</div>
+      <div class="rlogo">TCS</div><div class="rlogo">Infosys</div><div class="rlogo">JK Cement</div>
+      <div class="rlogo">Wipro</div><div class="rlogo">TATA Motors</div><div class="rlogo">BOSCH Ltd</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PLACEMENTS (navy) ════ -->
+<section id="placements" class="sec" style="background:var(--navy)">
+  <div class="container">
+    <div data-anim="up" style="margin-bottom:3.5rem">
+      <div class="stag">Placement Data</div>
+      <h2 class="stitle">Reports &amp; <span class="hlg">Key Statistics</span></h2>
+      <p class="sdesc">Download the current placement brochure and the last three placement reports. Explore key placement achievements from 2024-25.</p>
+    </div>
+    <div class="plflex">
+      <!-- Brochures: current + 3 previous years only -->
+      <div data-anim="left">
+        <div class="bsec-ttl">Documents &amp; Reports</div>
+        <div class="bstack">
+          <a href="https://drive.google.com/uc?export=download&id=1gTbdPgO_PRIaW2_CBCxMOiat5BVazKM3" class="bcard" target="_blank" download>
+            <div class="bicon new"><i class="fas fa-file-pdf"></i></div>
+            <div class="binfo"><h4>Placement Brochure 2025–26</h4><p>Current Academic Year &nbsp;·&nbsp; PDF, 4.2 MB</p></div>
+            <i class="fas fa-download barrow"></i>
+            <div class="bnew">NEW</div>
+          </a>
+          <a href="https://drive.google.com/uc?export=download&id=1SdKRQOwNscHhNlK8GYqivBEXSm-Fb93p" class="bcard" target="_blank" download>
+            <div class="bicon old"><i class="fas fa-chart-line"></i></div>
+            <div class="binfo"><h4>Placement Report 2024–25</h4><p>Annual Report &nbsp;·&nbsp; PDF, 2.8 MB</p></div>
+            <i class="fas fa-download barrow"></i>
+          </a>
+          <a href="https://drive.google.com/uc?export=download&id=1IV-8OuJ8lnw_tm1Afh_LAbdbZPZpNU94" class="bcard" target="_blank" download>
+            <div class="bicon old"><i class="fas fa-chart-bar"></i></div>
+            <div class="binfo"><h4>Placement Report 2023–24</h4><p>Annual Report &nbsp;·&nbsp; PDF, 2.4 MB</p></div>
+            <i class="fas fa-download barrow"></i>
+          </a>
+          <a href="https://drive.google.com/uc?export=download&id=1-Thh4eAm7wdUBIv7sPThr2nx0JjJoePV" class="bcard" target="_blank" download>
+            <div class="bicon old"><i class="fas fa-file-alt"></i></div>
+            <div class="binfo"><h4>Placement Report 2022–23</h4><p>Annual Report &nbsp;·&nbsp; PDF, 2.1 MB</p></div>
+            <i class="fas fa-download barrow"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Key stats 2×2, NO branch bars -->
+      <div data-anim="right">
+        <div class="bsec-ttl">Key Stats — 2024–25</div>
+        <div class="ksgrid">
+          <div class="kscard shimmer-card" data-anim="scale" data-delay="1"><span class="knum"><span class="counter" data-t="75">0</span>%</span><div class="klbl">Placement Rate</div><div class="kyr">2024–25</div></div>
+          <div class="kscard shimmer-card" data-anim="scale" data-delay="2"><span class="knum">₹<span class="counter" data-t="12">0</span>L</span><div class="klbl">Highest CTC</div><div class="kyr">2024–25</div></div>
+          <div class="kscard shimmer-card" data-anim="scale" data-delay="3"><span class="knum">₹<span class="counter" data-t="5">0</span>L</span><div class="klbl">Average CTC</div><div class="kyr">2024–25</div></div>
+          <div class="kscard shimmer-card" data-anim="scale" data-delay="4"><span class="knum"><span class="counter" data-t="30">0</span>+</span><div class="klbl">Companies Visited</div><div class="kyr">2024–25</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="guidelines" class="sec" style="background:var(--navy-mid);padding:3rem 0">
+  <div class="container">
+    
+    <div style="text-align:center;margin-bottom:2rem">
+      <div class="stag acc cen">Recruitment Process</div>
+      <h2 class="stitle" style="text-align:center">
+        Step-by-Step <span class="hlg">Placement Guide</span>
+      </h2>
+      <p class="sdesc" style="text-align:center;max-width:580px;margin:0 auto">
+        A streamlined, transparent process making hiring from CTAE effortless for companies of every size.
+      </p>
+    </div>
+
+    <div class="tlwrap">
+
+      <!-- STEP 1 -->
+      <div class="tli left">
+        <div class="tldot"></div>
+        <div class="tlb">
+          <div class="tlstep">Step 01</div>
+          <h4>Company Registration</h4>
+          <p>Register on the portal with your company details, JD, CTC, and eligibility criteria. Our team approves within 48 hours.</p>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="tli right">
+        <div class="tldot"></div>
+        <div class="tlb">
+          <div class="tlstep">Step 02</div>
+          <h4>Pre-Placement Talk (PPT)</h4>
+          <p>Conduct an online or campus PPT to introduce your organization. Significantly improves application quality and student intent.</p>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="tli left">
+        <div class="tldot"></div>
+        <div class="tlb">
+          <div class="tlstep">Step 03</div>
+          <h4>Resume Shortlisting</h4>
+          <p>Receive applications via the portal. Filter by CGPA, branch, skills, or any custom criteria. Our T&P Cell assists in coordination.</p>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="tli right">
+        <div class="tldot"></div>
+        <div class="tlb">
+          <div class="tlstep">Step 04</div>
+          <h4>Aptitude / Online Test</h4>
+          <p>Conduct tests on campus using our computer labs, or remotely via your preferred platform. We handle all logistics.</p>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="tli left">
+        <div class="tldot"></div>
+        <div class="tlb">
+          <div class="tlstep">Step 05</div>
+          <h4>Technical &amp; HR Interviews</h4>
+          <p>On-campus or virtual interviews. Dedicated rooms, breakout areas, and hospitality for your panel.</p>
+        </div>
+      </div>
+
+      <!-- STEP 6 -->
+      <div class="tli right">
+        <div class="tldot"></div>
+        <div class="tlb">
+          <div class="tlstep">Step 06</div>
+          <h4>Offer &amp; Onboarding</h4>
+          <p>Share offer letters via the portal. We manage documentation, verification, and joining formalities for selected students.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ CONTACT (navy) ════ -->
+<section id="contact" class="sec" style="background:var(--navy)">
+  <div class="container">
+    <div data-anim="up" style="margin-bottom:3.5rem;text-align:center">
+      <div class="stag cen">Get In Touch</div>
+      <h2 class="stitle" style="text-align:center">Placement Cell <span class="hlb">Contact</span></h2>
+    </div>
+    <div class="cgrid">
+      <div data-anim="up">
+        <!-- Placement Head -->
+        <div class="hdcard">
+          <div class="hd-top">
+            <div class="hphoto-wrap">
+              <div class="hphoto"><i class="fas fa-user-tie"></i></div>
+              <div class="hr1"></div><div class="hr2"></div>
+            </div>
+            <div class="hname">Dr. Vinod Kumar Yadav</div>
+            <div class="hrole">Professor and Incharge Placement Bureau, CTAE Udaipur</div>
+          </div>
+          <div class="hbottom">
+            <p style="font-size:.82rem;color:var(--text-muted);line-height:1.65;margin-bottom:1.2rem">With years of industry-academia experience, Dr. Yadav leads CTAE's placement activities with unwavering commitment to student success and corporate satisfaction.</p>
+            <div class="hcl">
+              <div class="hcl-item"><i class="fas fa-phone"></i>+91 9414737334</div>
+              <div class="hcl-item"><i class="fas fa-envelope"></i><a href="mailto:vinodcte@yahoo.co.in" style="color:var(--text-muted);text-decoration:none">vinodcte@yahoo.co.in</a></div>
+              <div class="hcl-item"><i class="fas fa-map-marker-alt"></i>Electrical Department, CTAE Campus, Udaipur – 313001</div>
+              <div class="hcl-item"><i class="fas fa-clock"></i>Mon–Sat: 10:00 AM – 4:00 PM</div>
+            </div>
+          </div>
+        </div>
+        <!-- Committee -->
+        <div>
+          <div class="comm-ttl">Placement Committee</div>
+          <div class="commgrid">
+            <div class="commcard" data-anim="up" data-delay="1"><div class="commav"><i class="fas fa-user"></i></div><div class="comminfo"><h4>Dr. Kalpana Jain</h4><p>Professor</p><span>Head of Dept CSE</span></div></div>
+            <div class="commcard" data-anim="up" data-delay="2"><div class="commav"><i class="fas fa-user"></i></div><div class="comminfo"><h4>Dr. Navneet Agarwal</h4><p>Professor</p><span>Head of Dept ECE</span></div></div>
+            <div class="commcard" data-anim="up" data-delay="3"><div class="commav"><i class="fas fa-user-graduate"></i></div><div class="comminfo"><h4>Dr. MS Khediya</h4><p>Professor</p><span>Head of Dept ME</span></div></div>
+            <div class="commcard" data-anim="up" data-delay="4"><div class="commav"><i class="fas fa-user-graduate"></i></div><div class="comminfo"><h4>Er. RS Shekhawat</h4><p>Assistant Professor</p><span>Dept of CE</span></div></div>
+            <div class="commcard" data-anim="up" data-delay="5"><div class="commav"><i class="fas fa-user-graduate"></i></div><div class="comminfo"><h4>Dr. Manjeet Dhankad</h4><p>Assistant Professor</p><span>Dept of Agri</span></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="container">
+    <div class="ftop">
+      <div class="fbrand">
+        <div class="flrow">
+          <img src="ctae logo.png" alt="CTAE" class="flogo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="flogo-fb" style="display:none">CT</div>
+          <div><h3>College of Technology &amp; Engineering</h3><div class="fs">MPUAT, Udaipur — Est. 1964</div></div>
+        </div>
+        <p>Dedicated to producing globally competitive engineers and responsible citizens. Our T&P Cell bridges the gap between academic learning and industry expectations.</p>
+        <div class="slinks">
+          <a href="#" class="sl"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="sl"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="sl"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="sl"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="fcol">
+        <h4>Quick Links</h4>
+        <ul class="flinks">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About CTAE</a></li>
+          <li><a href="#recruit">Why Recruit</a></li>
+          <li><a href="#guidelines">Recruitment Process</a></li>
+          <!-- <li><a href="#guidelines">Recruitment Process</a></li>
+          <li><a href="#contact">Contact</a></li> -->
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4>Resources</h4>
+        <ul class="flinks">
+          <li><a href="#placements">Placement Reports</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4>Contact</h4>
+        <div style="display:flex;flex-direction:column;gap:.8rem;font-size:.76rem;color:var(--text-muted)">
+          <div style="display:flex;gap:8px;align-items:flex-start"><i class="fas fa-map-marker-alt" style="color:#86efac;margin-top:2px;flex-shrink:0"></i><span>University Road, Ganpati Nagar, Udaipur, (Raj.) – 313001</span></div>
+          <div style="display:flex;gap:8px"><i class="fas fa-phone" style="color:#86efac"></i><span>+91-0294-2470733 (Office- Bureau)</span></div>
+          <div style="display:flex;gap:8px"><i class="fas fa-envelope" style="color:#86efac"></i><span><a href="mailto:placement_ctae@mpuat.ac.in" style="color:var(--text-muted);text-decoration:none">placement_ctae@mpuat.ac.in</a></span></div>
+          <div style="display:flex;gap:8px"><i class="fas fa-globe" style="color:#86efac"></i><a href="#" style="color:var(--text-muted);text-decoration:none">www.ctae.ac.in</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="fbot">
+      <p>© 2025 <span>CTAE Udaipur</span> — Training &amp; Placement Cell. All rights reserved.</p>
+      <!-- <p>Built with <span>♥</span> by T&P Tech Committee &nbsp;|&nbsp; <a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Disclaimer</a></p> -->
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── PRELOADER ── */
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('pre').classList.add('gone'),2000));
+
+/* ── CURSOR ── */
+const cur=document.getElementById('cur'),cring=document.getElementById('cring'),cglow=document.getElementById('cglow');
+let mx=0,my=0,rx=0,ry=0,gx=0,gy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function aC(){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;gx+=(mx-gx)*.055;gy+=(my-gy)*.055;
+  cring.style.left=rx+'px';cring.style.top=ry+'px';cglow.style.left=gx+'px';cglow.style.top=gy+'px';
+  requestAnimationFrame(aC)})();
+document.querySelectorAll('a,button,.rcard,.bcard,.hlc,.commcard,.kscard,.rlogo,.tbtn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('hov'));
+});
+
+/* ── MOUSE-FOLLOW BLOBS (hero) ── */
+const mb1=document.getElementById('mb1'),mb2=document.getElementById('mb2');
+let bx=0,by=0;
+document.addEventListener('mousemove',e=>{bx=e.clientX;by=e.clientY});
+(function bA(){
+  const tx=bx/window.innerWidth*60-30,ty=by/window.innerHeight*40-20;
+  mb1.style.transform=`translate(${tx}px,${ty}px)`;
+  mb2.style.transform=`translate(${-tx*.6}px,${-ty*.6}px)`;
+  requestAnimationFrame(bA);
+})();
+
+/* ── NAVBAR ── */
+const nb=document.getElementById('nb');
+window.addEventListener('scroll',()=>{
+  nb.classList.toggle('sc',scrollY>60);
+  document.getElementById('bktop').classList.toggle('show',scrollY>500);
+  updateActiveNav();
+});
+
+/* ── HAMBURGER ── */
+let mo=false;
+document.getElementById('hbg').addEventListener('click',()=>{
+  mo=!mo;document.getElementById('mobMenu').classList.toggle('open',mo);
+  const s=document.querySelectorAll('.hamburger span');
+  s[0].style.transform=mo?'rotate(45deg) translate(5px,5px)':'';
+  s[1].style.opacity=mo?'0':'1';
+  s[2].style.transform=mo?'rotate(-45deg) translate(5px,-5px)':'';
+});
+function cM(){mo=false;document.getElementById('mobMenu').classList.remove('open');document.querySelectorAll('.hamburger span').forEach(s=>{s.style.transform='';s.style.opacity='1'});}
+
+/* ── TABS ── */
+function sT(n,btn){
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('act'));
+  document.querySelectorAll('.tcont').forEach(c=>c.classList.remove('act'));
+  btn.classList.add('act');document.getElementById('t-'+n).classList.add('act');
+}
+
+/* ── LOGIN REDIRECTS ── */
+function doStudentLogin(){
+  window.location.href = 'http://localhost:5173/';
+}
+
+function doRecruiterLogin(){
+  window.location.href = 'http://localhost:5173/';
+}
+
+function doAdminLogin(){
+  window.location.href = 'http://localhost:5173/';
+}
+
+/* ── PARTICLES ── */
+const pc=document.getElementById('ptcs');
+const cols=['#f59e0b','#86efac','#4ade80','rgba(255,255,255,.8)','#a8e6c1'];
+for(let i=0;i<65;i++){
+  const p=document.createElement('div');p.classList.add('ptc');
+  const sz=Math.random()*4+1,drift=(Math.random()-.5)*240;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${Math.random()*22+12}s;animation-delay:${Math.random()*22}s;--d:${drift}px`;
+  pc.appendChild(p);
+}
+
+/* ── SCROLL REVEAL (data-anim) ── */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      // stagger siblings
+      const delay=parseFloat(e.target.dataset.delay||0)*80;
+      setTimeout(()=>e.target.classList.add('appeared'),delay);
+    }
+  });
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('[data-anim]').forEach(el=>ro.observe(el));
+
+/* ── SLIDE-IN for recruiter logos (stagger) ── */
+const logoObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const logos=document.querySelectorAll('.rlogo');
+      // only animate the first half (the real ones, not duplicates)
+      const half=Math.ceil(logos.length/2);
+      for(let i=0;i<half;i++){
+        setTimeout(()=>{logos[i].classList.add('appeared');logos[i+half]&&logos[i+half].classList.add('appeared');},i*50);
+      }
+      logoObs.disconnect();
+    }
+  });
+},{threshold:0.2});
+const rectrack=document.getElementById('rectrack');
+if(rectrack)logoObs.observe(rectrack);
+
+/* ── COUNTERS ── */
+function runC(el){
+  const t=parseFloat(el.dataset.t);let c=0;
+  const tm=setInterval(()=>{c=Math.min(c+t/70,t);el.textContent=Math.floor(c);if(c>=t){el.textContent=t;clearInterval(tm)}},22);
+}
+const cro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.counter').forEach(runC);cro.unobserve(e.target)}});
+},{threshold:.4});
+document.querySelectorAll('.hero-stats,.ksgrid').forEach(s=>cro.observe(s));
+
+/* ── RIPPLE ── */
+document.querySelectorAll('.ripple').forEach(el=>el.addEventListener('click',e=>{
+  const r=document.createElement('span');r.className='rp-eff';
+  const rect=el.getBoundingClientRect(),sz=Math.max(rect.width,rect.height);
+  r.style.cssText=`width:${sz}px;height:${sz}px;left:${e.clientX-rect.left-sz/2}px;top:${e.clientY-rect.top-sz/2}px`;
+  el.appendChild(r);setTimeout(()=>r.remove(),700);
+}));
+
+/* ── 3D TILT (cards) ── */
+document.querySelectorAll('.rcard,.hlc,.kscard,.bcard,.commcard').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const rect=c.getBoundingClientRect(),x=((e.clientX-rect.left)/rect.width-.5)*14,y=((e.clientY-rect.top)/rect.height-.5)*14;
+    c.style.transform=`perspective(900px) rotateY(${x}deg) rotateX(${-y}deg) translateY(-6px)`;
+  });
+  c.addEventListener('mouseleave',()=>c.style.transform='');
+});
+
+/* ── ACTIVE NAV ── */
+function updateActiveNav(){
+  let cur='';
+  document.querySelectorAll('section[id]').forEach(s=>{if(scrollY>=s.offsetTop-130)cur=s.id});
+  document.querySelectorAll('.nlinks a').forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'#fff':'';});
+}
+
+/* ── SECTION ENTRANCE WIPE (CSS-driven, JS triggers class) ── */
+// Adds a class when section first enters viewport, enabling the overlay sweep
+const secObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('section-entered');
+  });
+},{threshold:0.05});
+document.querySelectorAll('section').forEach(s=>{
+  s.style.position='relative';
+  secObs.observe(s);
+});
+
+/* ── INPUT FOCUS GLOW ── */
+document.querySelectorAll('input,textarea').forEach(inp=>{
+  inp.addEventListener('focus',()=>{inp.style.transform='scale(1.01)';});
+  inp.addEventListener('blur',()=>{inp.style.transform='';});
+});
+
+/* ── TIMELINE REVEAL ── */
+const tlObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add('show');
+      tlObs.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.15, rootMargin: '0px 0px -60px 0px'});
+document.querySelectorAll('.tli').forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.12) + 's';
+  tlObs.observe(el);
+});
+
+/* ── SCROLL EVENTS ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nb').classList.toggle('sc',scrollY>60);
+  document.getElementById('bktop').classList.toggle('show',scrollY>400);
+  updateActiveNav();
+});
+
+</script>
+
+<!-- ═══════════════════════════════════════════════════
+     MODALS  — Student Register · Recruiter Register
+              Student Forgot · Recruiter Forgot
+              OTP Verification
+════════════════════════════════════════════════════ -->
+<style>
+/* ── Modal Overlay ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:9990;
+  background:rgba(7,19,32,.88);
+  backdrop-filter:blur(14px);
+  display:flex;align-items:center;justify-content:center;
+  padding:1.2rem;
+  opacity:0;visibility:hidden;
+  transition:opacity .35s,visibility .35s;
+}
+.modal-overlay.open{opacity:1;visibility:visible}
+
+/* ── Modal Box ── */
+.modal-box{
+  background:rgba(13,31,56,.97);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:22px;
+  padding:2.2rem 2.4rem;
+  width:100%;max-width:520px;
+  max-height:90vh;overflow-y:auto;
+  position:relative;
+  box-shadow:0 30px 100px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08);
+  transform:translateY(28px) scale(.97);
+  transition:transform .38s cubic-bezier(.25,.46,.45,.94);
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent;
+}
+.modal-overlay.open .modal-box{transform:none}
+
+/* top shimmer bar */
+.modal-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:22px 22px 0 0;
+  background:linear-gradient(90deg,var(--gold),#86efac,#4ade80,var(--gold));
+  background-size:300% 100%;animation:shimA 3s linear infinite;
+}
+
+/* ── Modal Header ── */
+.modal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.6rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff}
+.modal-title small{display:block;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:400;color:var(--text-muted);margin-top:2px}
+.modal-close{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text-muted);font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:none;transition:all .2s;flex-shrink:0}
+.modal-close:hover{background:rgba(239,68,68,.2);border-color:rgba(239,68,68,.4);color:#f87171}
+
+/* ── Form Groups inside Modal ── */
+.modal-box .fg{margin-bottom:1rem}
+.modal-box .fg label{display:block;font-size:.7rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;letter-spacing:.07em;text-transform:uppercase}
+.modal-box .fg input,
+.modal-box .fg select{
+  width:100%;padding:11px 14px;
+  background:rgba(7,19,32,.75);
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:10px;color:#fff;
+  font-family:'DM Sans',sans-serif;font-size:.88rem;
+  transition:all .25s;outline:none;
+  appearance:none;-webkit-appearance:none;
+}
+.modal-box .fg select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a9cbf' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.modal-box .fg input:focus,
+.modal-box .fg select:focus{border-color:var(--blue-bright);box-shadow:0 0 0 3px rgba(96,165,250,.15)}
+.modal-box .fg input::placeholder{color:rgba(122,156,191,.45)}
+.modal-box .fg select option{background:#0d1f38;color:#fff}
+
+/* 2-col grid inside modal */
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:480px){.fg-row{grid-template-columns:1fr}}
+
+/* ── Submit button inside modal ── */
+.modal-sub{
+  width:100%;padding:12px;margin-top:.6rem;
+  background:linear-gradient(135deg,var(--blue),var(--blue-light));
+  border:none;color:#fff;font-weight:700;font-size:.88rem;
+  border-radius:10px;cursor:none;font-family:'DM Sans',sans-serif;
+  box-shadow:0 8px 25px rgba(26,86,219,.4);
+  transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px;
+  position:relative;overflow:hidden;
+}
+.modal-sub::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .5s}
+.modal-sub:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(26,86,219,.55)}
+.modal-sub:hover::after{left:100%}
+.modal-sub.gold-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);box-shadow:0 8px 25px rgba(201,168,76,.35)}
+.modal-sub.gold-btn:hover{box-shadow:0 12px 35px rgba(201,168,76,.55)}
+
+/* ── Divider ── */
+.modal-div{display:flex;align-items:center;gap:10px;margin:1.2rem 0;color:var(--text-muted);font-size:.72rem}
+.modal-div::before,.modal-div::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+
+/* ── OTP Boxes ── */
+.otp-wrap{display:flex;gap:.6rem;justify-content:center;margin:1.2rem 0}
+.otp-inp{
+  width:52px;height:58px;text-align:center;
+  background:rgba(7,19,32,.75);border:1.5px solid rgba(255,255,255,.12);
+  border-radius:12px;color:#fff;font-size:1.4rem;font-weight:700;
+  font-family:'Space Mono',monospace;outline:none;transition:all .25s;
+}
+.otp-inp:focus{border-color:var(--blue-bright);box-shadow:0 0 0 3px rgba(96,165,250,.2);transform:scale(1.05)}
+.otp-inp.filled{border-color:#86efac;box-shadow:0 0 0 3px rgba(134,239,172,.2)}
+
+/* ── Info notice strip ── */
+.modal-notice{
+  background:rgba(134,239,172,.07);border:1px solid rgba(134,239,172,.2);
+  border-radius:10px;padding:.75rem 1rem;font-size:.75rem;color:var(--text-muted2);
+  display:flex;align-items:flex-start;gap:.6rem;margin-bottom:1rem;line-height:1.5;
+}
+.modal-notice i{color:#86efac;flex-shrink:0;margin-top:2px}
+
+/* ── Success state ── */
+.modal-success{
+  text-align:center;padding:2rem 1rem;display:none;
+}
+.modal-success .s-icon{width:68px;height:68px;border-radius:50%;background:rgba(34,197,94,.15);border:2px solid rgba(34,197,94,.4);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#4ade80;margin:0 auto 1.2rem}
+.modal-success h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;margin-bottom:.5rem}
+.modal-success p{font-size:.82rem;color:var(--text-muted);line-height:1.6}
+
+/* ── Back link ── */
+.modal-back{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;color:#86efac;cursor:none;background:none;border:none;font-family:'DM Sans',sans-serif;margin-bottom:1.2rem;transition:color .2s;padding:0}
+.modal-back:hover{color:#4ade80}
+
+/* ── OTP timer ── */
+.otp-timer{font-size:.72rem;color:var(--text-muted);text-align:center;margin-top:.5rem}
+.otp-timer a{color:#86efac;text-decoration:none;cursor:none}
+.otp-timer a:hover{text-decoration:underline}
+
+/* Password strength */
+.pw-strength{height:4px;border-radius:4px;margin-top:6px;background:rgba(255,255,255,.08);overflow:hidden}
+.pw-strength-bar{height:100%;width:0;border-radius:4px;transition:width .4s,background .4s}
+</style>
+
+
+<!-- ══ MODAL: Student Login ══ -->
+<div class="modal-overlay" id="modal-student-login" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-hd">
+      <div class="modal-title">🎓 Student Login<small>Enter your credentials to continue</small></div>
+      <button class="modal-close" onclick="closeModal('modal-student-login')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="fg"><label>Enrollment Number</label><input type="text" id="sl-enroll" placeholder="e.g. 21CTAE0045"></div>
+    <div class="fg"><label>Password</label><input type="password" id="sl-pass" placeholder="••••••••"></div>
+    <button class="modal-sub ripple" onclick="submitStudentLogin()"><i class="fas fa-sign-in-alt"></i>Login as Student</button>
+    <div class="modal-div">OR</div>
+    <div style="text-align:center;font-size:.75rem;color:var(--text-muted)">
+      <a href="#" onclick="closeModal('modal-student-login');openModal('modal-student-forgot');return false;" style="color:var(--blue-bright);text-decoration:none">Forgot Password?</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: Recruiter Login ══ -->
+<div class="modal-overlay" id="modal-recruiter-login" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-hd">
+      <div class="modal-title">🏢 Recruiter Login<small>Enter your company credentials</small></div>
+      <button class="modal-close" onclick="closeModal('modal-recruiter-login')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="fg"><label>Company HR Email</label><input type="email" id="rl-email" placeholder="hr@company.com"></div>
+    <div class="fg"><label>Password</label><input type="password" id="rl-pass" placeholder="••••••••"></div>
+    <button class="modal-sub ripple" onclick="submitRecruiterLogin()"><i class="fas fa-sign-in-alt"></i>Login as Recruiter</button>
+    <div class="modal-div">OR</div>
+    <div style="text-align:center;font-size:.75rem;color:var(--text-muted)">
+      New here? <a href="#" onclick="closeModal('modal-recruiter-login');openModal('modal-recruiter-register');return false;" style="color:var(--gold-light);text-decoration:none;font-weight:600">Register Your Company</a>
+      &nbsp;·&nbsp;
+      <a href="#" onclick="closeModal('modal-recruiter-login');openModal('modal-recruiter-forgot');return false;" style="color:var(--blue-bright);text-decoration:none">Forgot Password?</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: Admin Login ══ -->
+<div class="modal-overlay" id="modal-admin-login" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-hd">
+      <div class="modal-title">🛡 Admin Login<small>Secure administrator access</small></div>
+      <button class="modal-close" onclick="closeModal('modal-admin-login')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="fg"><label>Admin Username</label><input type="text" id="al-user" placeholder="admin username"></div>
+    <div class="fg"><label>Password</label><input type="password" id="al-pass" placeholder="••••••••"></div>
+    <button class="modal-sub ripple" onclick="submitAdminLogin()"><i class="fas fa-lock"></i>Secure Admin Login</button>
+    <div style="text-align:center;margin-top:.8rem;font-size:.73rem;color:var(--text-muted)">Need help? Contact IT Cell</div>
+  </div>
+</div>
+
+<!-- ══ MODAL 2: Recruiter Register ══ -->
+<div class="modal-overlay" id="modal-recruiter-register" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <div class="modal-hd">
+      <div class="modal-title">🏢 Register Your Company<small>CTAE Udaipur · Recruiter Portal</small></div>
+      <button class="modal-close" onclick="closeModal('modal-recruiter-register')"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div id="rreg-form">
+      <div class="modal-notice"><i class="fas fa-info-circle"></i>Complete the form below. Our Placement Cell will review and activate your account within 1–2 working days.</div>
+
+      <div class="fg"><label>Company / Organisation Name</label><input type="text" id="rr-company" placeholder="e.g. Infosys Limited"></div>
+      <div class="fg-row">
+        <div class="fg">
+          <label>Industry Sector</label>
+          <select id="rr-sector">
+            <option value="" disabled selected>Select sector</option>
+            <option>Information Technology</option>
+            <option>Agriculture &amp; Food Tech</option>
+            <option>Manufacturing</option>
+            <option>Energy &amp; Power</option>
+            <option>Construction &amp; Infrastructure</option>
+            <option>FMCG</option>
+            <option>Finance &amp; Banking</option>
+            <option>Consulting</option>
+            <option>Government / PSU</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Company Size</label>
+          <select id="rr-size">
+            <option value="" disabled selected>Select size</option>
+            <option>Startup (&lt;50)</option>
+            <option>SME (50–500)</option>
+            <option>Mid-size (500–5000)</option>
+            <option>Large (5000+)</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>Company Website</label><input type="url" id="rr-website" placeholder="https://company.com"></div>
+      <div class="fg"><label>HR Contact Person Name</label><input type="text" id="rr-hrname" placeholder="Full name"></div>
+      <div class="fg"><label>Official HR Email</label><input type="email" id="rr-email" placeholder="hr@company.com"></div>
+      <div class="fg"><label>HR Mobile Number</label><input type="tel" id="rr-phone" placeholder="+91 98765 43210"></div>
+      <div class="fg"><label>Designation / Role</label><input type="text" id="rr-role" placeholder="e.g. Talent Acquisition Manager"></div>
+      <div class="fg">
+        <label>Branches Interested In (optional)</label>
+        <select id="rr-branches">
+          <option value="" disabled selected>Select primary branch</option>
+          <option>All Branches</option>
+          <option>Agricultural Engineering</option>
+          <option>Civil Engineering</option>
+          <option>Computer Science &amp; Engineering</option>
+          <option>Electrical Engineering</option>
+          <option>Electronics &amp; Communication</option>
+          <option>Food Technology</option>
+          <option>Mechanical Engineering</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Password</label>
+        <input type="password" id="rr-pass" placeholder="Min. 8 characters" oninput="pwStrength(this,'rr-bar')">
+        <div class="pw-strength"><div class="pw-strength-bar" id="rr-bar"></div></div>
+      </div>
+      <div class="fg"><label>Confirm Password</label><input type="password" id="rr-cpass" placeholder="Re-enter password"></div>
+
+      <button class="modal-sub gold-btn ripple" onclick="submitRecruiterRegister()"><i class="fas fa-building"></i>Register Company &amp; Send OTP</button>
+    </div>
+
+    <div class="modal-success" id="rreg-success">
+      <div class="s-icon"><i class="fas fa-check"></i></div>
+      <h3>Registration Submitted!</h3>
+      <p>Your company registration has been received. An OTP verification email has been sent to your HR email. After email verification, the Placement Cell will activate your account within 1–2 business days.</p>
+      <button class="modal-sub gold-btn" style="margin-top:1.5rem" onclick="closeModal('modal-recruiter-register')"><i class="fas fa-sign-in-alt"></i>Back to Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL 3: Student Forgot Password ══ -->
+<div class="modal-overlay" id="modal-student-forgot" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-hd">
+      <div class="modal-title">🔑 Forgot Password<small>Student Account Recovery</small></div>
+      <button class="modal-close" onclick="closeModal('modal-student-forgot')"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Step 1: enter identifier -->
+    <div id="sf-step1">
+      <div class="modal-notice"><i class="fas fa-envelope"></i>Enter your enrollment number or registered email. We'll send a 6-digit OTP to verify your identity.</div>
+      <div class="fg"><label>Enrollment No. or Email</label><input type="text" id="sf-id" placeholder="21CTAE0045 or email@ctae.ac.in"></div>
+      <div class="modal-div">OR login with OTP</div>
+      <div class="fg"><label>Registered Mobile</label><input type="tel" id="sf-mobile" placeholder="+91 XXXXX XXXXX"></div>
+      <button class="modal-sub ripple" onclick="studentForgotSendOTP()"><i class="fas fa-paper-plane"></i>Send OTP</button>
+    </div>
+
+    <!-- Step 2: OTP entry -->
+    <div id="sf-step2" style="display:none">
+      <button class="modal-back" onclick="showStep('sf-step1','sf-step2')"><i class="fas fa-arrow-left"></i> Back</button>
+      <div class="modal-notice"><i class="fas fa-shield-alt"></i>A 6-digit OTP has been sent to your registered email / mobile. Enter it below.</div>
+      <div class="otp-wrap" id="sf-otp-wrap">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,1,'sf-otp-wrap')" type="text" inputmode="numeric">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,2,'sf-otp-wrap')" type="text" inputmode="numeric">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,3,'sf-otp-wrap')" type="text" inputmode="numeric">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,4,'sf-otp-wrap')" type="text" inputmode="numeric">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,5,'sf-otp-wrap')" type="text" inputmode="numeric">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,6,'sf-otp-wrap')" type="text" inputmode="numeric">
+      </div>
+      <div class="otp-timer" id="sf-timer">Resend OTP in <span id="sf-tc">60</span>s</div>
+      <button class="modal-sub ripple" onclick="verifyOTPStep('sf-step2','sf-step3')"><i class="fas fa-check-circle"></i>Verify OTP</button>
+    </div>
+
+    <!-- Step 3: set new password -->
+    <div id="sf-step3" style="display:none">
+      <button class="modal-back" onclick="showStep('sf-step2','sf-step3')"><i class="fas fa-arrow-left"></i> Back</button>
+      <div class="modal-notice" style="border-color:rgba(74,222,128,.3);background:rgba(34,197,94,.08)"><i class="fas fa-check-circle" style="color:#4ade80"></i>Identity verified! Set your new password below.</div>
+      <div class="fg"><label>New Password</label><input type="password" id="sf-np" placeholder="Min. 8 characters" oninput="pwStrength(this,'sf-bar')"><div class="pw-strength"><div class="pw-strength-bar" id="sf-bar"></div></div></div>
+      <div class="fg"><label>Confirm New Password</label><input type="password" id="sf-cp" placeholder="Re-enter new password"></div>
+      <button class="modal-sub ripple" onclick="resetPasswordDone('modal-student-forgot')"><i class="fas fa-lock"></i>Reset Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL 4: Recruiter Forgot Password ══ -->
+<div class="modal-overlay" id="modal-recruiter-forgot" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-hd">
+      <div class="modal-title">🔑 Forgot Password<small>Recruiter Account Recovery</small></div>
+      <button class="modal-close" onclick="closeModal('modal-recruiter-forgot')"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Step 1 -->
+    <div id="rf-step1">
+      <div class="modal-notice"><i class="fas fa-envelope"></i>Enter your registered HR email address. A 6-digit OTP will be sent for verification.</div>
+      <div class="fg"><label>Company HR Email</label><input type="email" id="rf-email" placeholder="hr@company.com"></div>
+      <div class="modal-div">OR login with OTP</div>
+      <div class="fg"><label>Registered Mobile</label><input type="tel" id="rf-mobile" placeholder="+91 XXXXX XXXXX"></div>
+      <button class="modal-sub gold-btn ripple" onclick="recruiterForgotSendOTP()"><i class="fas fa-paper-plane"></i>Send OTP</button>
+    </div>
+
+    <!-- Step 2: OTP -->
+    <div id="rf-step2" style="display:none">
+      <button class="modal-back" onclick="showStep('rf-step1','rf-step2')"><i class="fas fa-arrow-left"></i> Back</button>
+      <div class="modal-notice"><i class="fas fa-shield-alt"></i>A 6-digit OTP has been sent to your registered email / mobile. Enter it below.</div>
+      <div class="otp-wrap" id="rf-otp-wrap">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,1,'rf-otp-wrap')" type="text" inputmode="numeric">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,2,'rf-otp-wrap')" type="text" inputmode="numeric">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,3,'rf-otp-wrap')" type="text" inputmode="numeric">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,4,'rf-otp-wrap')" type="text" inputmode="numeric">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,5,'rf-otp-wrap')" type="text" inputmode="numeric">
+        <input class="otp-inp" maxlength="1" oninput="otpNav(this,6,'rf-otp-wrap')" type="text" inputmode="numeric">
+      </div>
+      <div class="otp-timer" id="rf-timer">Resend OTP in <span id="rf-tc">60</span>s</div>
+      <button class="modal-sub gold-btn ripple" onclick="verifyOTPStep('rf-step2','rf-step3')"><i class="fas fa-check-circle"></i>Verify OTP</button>
+    </div>
+
+    <!-- Step 3: new password -->
+    <div id="rf-step3" style="display:none">
+      <button class="modal-back" onclick="showStep('rf-step2','rf-step3')"><i class="fas fa-arrow-left"></i> Back</button>
+      <div class="modal-notice" style="border-color:rgba(74,222,128,.3);background:rgba(34,197,94,.08)"><i class="fas fa-check-circle" style="color:#4ade80"></i>Identity verified! Set your new password below.</div>
+      <div class="fg"><label>New Password</label><input type="password" id="rf-np" placeholder="Min. 8 characters" oninput="pwStrength(this,'rf-bar')"><div class="pw-strength"><div class="pw-strength-bar" id="rf-bar"></div></div></div>
+      <div class="fg"><label>Confirm New Password</label><input type="password" id="rf-cp" placeholder="Re-enter new password"></div>
+      <button class="modal-sub gold-btn ripple" onclick="resetPasswordDone('modal-recruiter-forgot')"><i class="fas fa-lock"></i>Reset Password</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════
+   LOGIN SUBMIT FUNCTIONS
+═══════════════════════════════ */
+function submitStudentLogin(){
+  const enroll=document.getElementById('sl-enroll').value.trim();
+  const pass=document.getElementById('sl-pass').value.trim();
+  const btn=document.querySelector('#modal-student-login .modal-sub');
+  if(!enroll||!pass) return btnError(btn,'Please fill all fields','<i class="fas fa-sign-in-alt"></i>Login as Student');
+  btnLoading(btn,'Logging in...');
+  setTimeout(()=>{ closeModal('modal-student-login'); showToast('✅ Logged in as Student!'); },1000);
+}
+function submitRecruiterLogin(){
+  const email=document.getElementById('rl-email').value.trim();
+  const pass=document.getElementById('rl-pass').value.trim();
+  const btn=document.querySelector('#modal-recruiter-login .modal-sub');
+  if(!email||!pass) return btnError(btn,'Please fill all fields','<i class="fas fa-sign-in-alt"></i>Login as Recruiter');
+  btnLoading(btn,'Logging in...');
+  setTimeout(()=>{ closeModal('modal-recruiter-login'); showToast('✅ Logged in as Recruiter!'); },1000);
+}
+function submitAdminLogin(){
+  const user=document.getElementById('al-user').value.trim();
+  const pass=document.getElementById('al-pass').value.trim();
+  const btn=document.querySelector('#modal-admin-login .modal-sub');
+  if(!user||!pass) return btnError(btn,'Please fill all fields','<i class="fas fa-lock"></i>Secure Admin Login');
+  btnLoading(btn,'Authenticating...');
+  setTimeout(()=>{ closeModal('modal-admin-login'); showToast('✅ Logged in as Admin!'); },1000);
+}
+
+/* ═══════════════════════════════
+   MODAL ENGINE
+═══════════════════════════════ */
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow='hidden';
+  // reset forgot-password steps whenever re-opened
+  if(id.includes('forgot')){
+    const prefix=id.includes('student')?'sf':'rf';
+    showStep(prefix+'-step1', null, true);
+    // clear OTP inputs
+    document.querySelectorAll('#'+id+' .otp-inp').forEach(i=>{i.value='';i.classList.remove('filled')});
+  }
+  // reset register forms
+  if(id.includes('register')){
+    const suf='rreg';
+    document.getElementById(suf+'-form').style.display='block';
+    document.getElementById(suf+'-success').style.display='none';
+  }
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ─ Step management for forgot-password wizard ─ */
+function showStep(showId, hideId, resetAll){
+  if(resetAll){
+    // hide all steps in the same modal
+    const modal=document.getElementById(showId).closest('.modal-overlay');
+    modal.querySelectorAll('[id$="-step1"],[id$="-step2"],[id$="-step3"]').forEach(s=>{
+      s.style.display='none';
+    });
+  } else if(hideId){
+    document.getElementById(hideId).style.display='none';
+  }
+  document.getElementById(showId).style.display='block';
+}
+
+/* ═══════════════════════════════
+   PASSWORD STRENGTH METER
+═══════════════════════════════ */
+function pwStrength(inp,barId){
+  const v=inp.value,bar=document.getElementById(barId);
+  let score=0;
+  if(v.length>=8)score++;
+  if(/[A-Z]/.test(v))score++;
+  if(/[0-9]/.test(v))score++;
+  if(/[^A-Za-z0-9]/.test(v))score++;
+  const pct=['0%','30%','55%','80%','100%'][score];
+  const col=['','#ef4444','#f59e0b','#3b82f6','#22c55e'][score];
+  bar.style.width=pct;bar.style.background=col;
+}
+
+/* ═══════════════════════════════
+   OTP INPUT — auto-advance focus
+═══════════════════════════════ */
+function otpNav(inp,pos,wrapId){
+  inp.value=inp.value.replace(/[^0-9]/g,'');
+  if(inp.value){
+    inp.classList.add('filled');
+    const next=document.querySelectorAll('#'+wrapId+' .otp-inp')[pos];
+    if(next)next.focus();
+  } else {
+    inp.classList.remove('filled');
+  }
+}
+
+/* ═══════════════════════════════
+   OTP COUNTDOWN TIMER
+═══════════════════════════════ */
+function startOTPTimer(tcId, timerId){
+  let sec=60;
+  const tc=document.getElementById(tcId);
+  const timerEl=document.getElementById(timerId);
+  if(tc) tc.textContent=sec;
+  const iv=setInterval(()=>{
+    sec--;
+    if(tc) tc.textContent=sec;
+    if(sec<=0){
+      clearInterval(iv);
+      if(timerEl) timerEl.innerHTML='<a onclick="void(0)" href="#">Resend OTP</a>';
+    }
+  },1000);
+}
+
+/* ═══════════════════════════════
+   BUTTON FEEDBACK HELPER
+═══════════════════════════════ */
+function btnError(btn,msg,resetHTML,delay=2400){
+  btn.style.background='linear-gradient(135deg,#ef4444,#f87171)';
+  btn.innerHTML='<i class="fas fa-exclamation-circle"></i> '+msg;
+  setTimeout(()=>{btn.style.background='';btn.innerHTML=resetHTML;},delay);
+}
+function btnLoading(btn,msg){
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> '+msg;
+  btn.disabled=true;
+  setTimeout(()=>btn.disabled=false,3000);
+}
+
+/* ═══════════════════════════════
+   RECRUITER REGISTER
+═══════════════════════════════ */
+function submitRecruiterRegister(){
+  const company=document.getElementById('rr-company').value.trim();
+  const sector=document.getElementById('rr-sector').value;
+  const hrname=document.getElementById('rr-hrname').value.trim();
+  const email=document.getElementById('rr-email').value.trim();
+  const phone=document.getElementById('rr-phone').value.trim();
+  const pass=document.getElementById('rr-pass').value;
+  const cpass=document.getElementById('rr-cpass').value;
+  const btn=document.querySelector('#rreg-form .modal-sub');
+
+  if(!company||!sector||!hrname||!email||!phone||!pass||!cpass){
+    return btnError(btn,'Please fill all required fields','<i class="fas fa-building"></i>Register Company &amp; Send OTP');
+  }
+  if(pass!==cpass){
+    return btnError(btn,'Passwords do not match','<i class="fas fa-building"></i>Register Company &amp; Send OTP');
+  }
+  if(pass.length<8){
+    return btnError(btn,'Password must be 8+ characters','<i class="fas fa-building"></i>Register Company &amp; Send OTP');
+  }
+  btnLoading(btn,'Submitting registration...');
+  setTimeout(()=>{
+    document.getElementById('rreg-form').style.display='none';
+    document.getElementById('rreg-success').style.display='block';
+  },1200);
+}
+
+/* ═══════════════════════════════
+   FORGOT PASSWORD — SEND OTP
+═══════════════════════════════ */
+function studentForgotSendOTP(){
+  const id=document.getElementById('sf-id').value.trim();
+  const mob=document.getElementById('sf-mobile').value.trim();
+  const btn=document.querySelector('#sf-step1 .modal-sub');
+  if(!id&&!mob){
+    return btnError(btn,'Enter enrollment / email or mobile','<i class="fas fa-paper-plane"></i>Send OTP');
+  }
+  btnLoading(btn,'Sending OTP...');
+  setTimeout(()=>{
+    btn.disabled=false;
+    showStep('sf-step2','sf-step1');
+    startOTPTimer('sf-tc','sf-timer');
+  },1000);
+}
+
+function recruiterForgotSendOTP(){
+  const email=document.getElementById('rf-email').value.trim();
+  const mob=document.getElementById('rf-mobile').value.trim();
+  const btn=document.querySelector('#rf-step1 .modal-sub');
+  if(!email&&!mob){
+    return btnError(btn,'Enter HR email or mobile','<i class="fas fa-paper-plane"></i>Send OTP');
+  }
+  btnLoading(btn,'Sending OTP...');
+  setTimeout(()=>{
+    btn.disabled=false;
+    showStep('rf-step2','rf-step1');
+    startOTPTimer('rf-tc','rf-timer');
+  },1000);
+}
+
+/* ═══════════════════════════════
+   FORGOT PASSWORD — VERIFY OTP
+═══════════════════════════════ */
+function verifyOTPStep(hideId, showNextId){
+  // get otp wrap inside current step
+  const step=document.getElementById(hideId);
+  const inputs=step.querySelectorAll('.otp-inp');
+  const otp=[...inputs].map(i=>i.value).join('');
+  const btn=step.querySelector('.modal-sub');
+
+  if(otp.length<6||otp.includes('')){
+    return btnError(btn,'Enter all 6 OTP digits','<i class="fas fa-check-circle"></i>Verify OTP');
+  }
+  btnLoading(btn,'Verifying...');
+  setTimeout(()=>{
+    btn.disabled=false;
+    showStep(showNextId, hideId);
+  },900);
+}
+
+/* ═══════════════════════════════
+   FORGOT PASSWORD — RESET
+═══════════════════════════════ */
+function resetPasswordDone(modalId){
+  const prefix=modalId.includes('student')?'sf':'rf';
+  const np=document.getElementById(prefix+'-np').value;
+  const cp=document.getElementById(prefix+'-cp').value;
+  const btn=document.querySelector('#'+prefix+'-step3 .modal-sub');
+
+  if(!np||!cp){
+    return btnError(btn,'Please fill both fields','<i class="fas fa-lock"></i>Reset Password');
+  }
+  if(np!==cp){
+    return btnError(btn,'Passwords do not match','<i class="fas fa-lock"></i>Reset Password');
+  }
+  if(np.length<8){
+    return btnError(btn,'Password must be 8+ characters','<i class="fas fa-lock"></i>Reset Password');
+  }
+  btnLoading(btn,'Resetting password...');
+  setTimeout(()=>{
+    closeModal(modalId);
+    // Show quick toast
+    showToast('✅ Password reset successful! You can now login.');
+  },1100);
+}
+
+/* ═══════════════════════════════
+   TOAST NOTIFICATION
+═══════════════════════════════ */
+function showToast(msg){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(13,31,56,.97);border:1px solid rgba(52,211,153,.4);color:#4ade80;padding:.85rem 1.6rem;border-radius:12px;font-size:.85rem;font-weight:600;z-index:99999;box-shadow:0 10px 40px rgba(0,0,0,.5);transition:opacity .5s;white-space:nowrap;font-family
