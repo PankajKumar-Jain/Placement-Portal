@@ -758,7 +758,7 @@ function isActionValid(action, currentStatus) {
       obj.currentJobArr = 'applicants';
       obj.currentApplicantArr = 'jobsApplied';
       break;
-    case 'shortlist':
+    case 'shortlisted':
       obj.currentJobArr = 'shortlistedCandidates';
       obj.currentApplicantArr = 'jobsShortlisted';
       break;
