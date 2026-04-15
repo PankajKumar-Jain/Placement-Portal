@@ -15,6 +15,15 @@ const {
   updateCompany,
   getAdminStats,
 } = require('../controllers/adminController');
+const {
+  getAdminSettings,
+  updateAdminSettings,
+  changeAdminPassword,
+  previewStudentsImport,
+  confirmStudentsImport,
+  exportStudentsCsv,
+  downloadSampleStudentCsv,
+} = require('../controllers/adminImportSettingsController');
 
 router.get('/stats', getAdminStats);
 router.get('/students', getStudents);
@@ -30,5 +39,14 @@ router.delete('/companies/:companyId', deleteCompany);
 router.post('/companies/:companyId/admins', addCompanyAdmin);
 router.get('/companies/:companyId', getSingleCompany);
 router.patch('/companies/:companyId', updateCompany);
+
+router.get('/settings', getAdminSettings);
+router.patch('/settings', updateAdminSettings);
+router.post('/settings/change-password', changeAdminPassword);
+
+router.get('/students/import/sample', downloadSampleStudentCsv);
+router.post('/students/import/preview', previewStudentsImport);
+router.post('/students/import/confirm', confirmStudentsImport);
+router.get('/students/export', exportStudentsCsv);
 
 module.exports = router;

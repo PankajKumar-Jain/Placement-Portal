@@ -91,5 +91,10 @@ export function getOptions(dispatch) {
         },
       ],
     },
+    {
+      id: 6,
+      text: 'settings',
+      href: 'settings',
+    },
   ];
 }

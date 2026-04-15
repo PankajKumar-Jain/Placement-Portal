@@ -34,7 +34,7 @@ const getStudents = async (req, res) => {
 
   const students = await UserModel.find(query)
     .select(
-      'name isLateralEntry rollNo courseId courseName batchId batchYear departmentId departmentName isBlocked'
+      'name isLateralEntry rollNo courseId courseName batchId batchYear departmentId departmentName isBlocked forcePasswordReset'
     )
     .sort('rollNo')
     .skip(skip)

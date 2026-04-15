@@ -88,6 +88,7 @@ const login = async (req, res) => {
     success: true,
     message: 'User Logged in',
     role: user.role,
+    forcePasswordReset: Boolean(user.forcePasswordReset),
   });
 };
 

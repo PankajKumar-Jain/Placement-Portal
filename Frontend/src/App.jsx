@@ -23,8 +23,10 @@ import {
   SingleCompany,
   StudentApplications,
   AdminAnalytics,
+  AdminSettings,
   ResumeBuilder,
   StudentAnnouncements,
+  StudentPasswordReset,
 } from './pages';
 
 import { store } from './store';
@@ -36,6 +38,7 @@ import { action as jobsAction } from './pages/Jobs';
 import { action as createJobAction } from './pages/JobCreatePage';
 import { action as editJobAction } from './pages/JobEditPage';
 import { action as studentDetailsAction } from './pages/StudentDetails';
+import { action as studentPasswordResetAction } from './pages/StudentPasswordReset';
 import { action as companyApplicationAction } from './pages/JobApplications';
 import { action as singleJobAction } from './pages/SingleJob';
 import { action as adminDBAction } from './pages/AdminDashboard';
@@ -46,6 +49,7 @@ import { action as announcementsAction } from './pages/AdminPages/Announcements'
 import { loader as loginLoader } from './pages/Login';
 import { loader as companyDBLoader } from './pages/CompanyDashboard';
 import { loader as studentDBloader } from './pages/StudentDetails';
+import { loader as studentDashboardLoader } from './pages/StudentDashboard';
 import { loader as studentApplicationsLoader } from './pages/StudentApplications';
 import { loader as resumeBuilderLoader } from './pages/ResumeBuilder';
 import { loader as adminDBLoader } from './pages/AdminDashboard';
@@ -60,6 +64,7 @@ import { loader as companyLoader } from './pages/AdminPages/Companies';
 import { loader as singleCompanyLoader } from './pages/AdminPages/SingleCompany';
 import { loader as adminAnalyticsLoader } from './pages/AdminPages/AdminAnalytics';
 import { loader as studentAnnouncementsLoader } from './pages/StudentAnnouncements';
+import { setUser } from './features/user/userSlice';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -80,6 +85,7 @@ const router = createBrowserRouter([
   {
     path: '/student-dashboard',
     element: <StudentDashboard />,
+    loader: studentDashboardLoader(),
     errorElement: <ErrorElement />,
     children: [
       {
@@ -103,6 +109,11 @@ const router = createBrowserRouter([
         path: 'announcements',
         element: <StudentAnnouncements />,
         loader: studentAnnouncementsLoader(queryClient, store),
+      },
+      {
+        path: 'reset-password',
+        element: <StudentPasswordReset />,
+        action: studentPasswordResetAction(store, setUser),
       },
       {
         path: 'jobs',
@@ -167,6 +178,10 @@ const router = createBrowserRouter([
             loader: singleCompanyLoader(queryClient, store),
           },
         ],
+      },
+      {
+        path: 'settings',
+        element: <AdminSettings />,
       },
     ],
   },
