@@ -12,6 +12,8 @@ export function loader(store) {
       const { user } = data;
       store.dispatch(setUser({ user }));
       const role = user.role;
+      if (role == 'student' && user.forcePasswordReset)
+        return redirect('/student-dashboard/reset-password');
       if (role == 'student') return redirect('/student-dashboard');
       if (role == 'company_admin') return redirect('/company-dashboard');
       if (role == 'admin') return redirect('/admin-dashboard');

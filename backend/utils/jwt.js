@@ -10,6 +10,7 @@ const createUserToken = (user) => {
     batchId,
     departmentId,
     companyId,
+    forcePasswordReset,
   } = user;
 
   return {
@@ -21,6 +22,7 @@ const createUserToken = (user) => {
     batchId,
     departmentId,
     companyId,
+    forcePasswordReset: Boolean(forcePasswordReset),
   };
 };
 

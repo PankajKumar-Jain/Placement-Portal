@@ -91,6 +91,7 @@ const StudentsTable = () => {
                 <th>Batch</th>
                 <th>Department</th>
                 <th>Status</th>
+                <th>Password Reset</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -107,6 +108,13 @@ const StudentsTable = () => {
                       <span className="badge badge-error">Blocked</span>
                     ) : (
                       <span className="badge badge-success">Active</span>
+                    )}
+                  </td>
+                  <td>
+                    {student.forcePasswordReset ? (
+                      <span className="badge badge-warning">Required</span>
+                    ) : (
+                      <span className="badge badge-ghost">Not Required</span>
                     )}
                   </td>
                   <td className="flex flex-wrap gap-x-2 gap-y-2 justify-center">

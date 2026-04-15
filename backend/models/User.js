@@ -247,6 +247,11 @@ const UserSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'JobApplication',
     },
+
+    forcePasswordReset: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true, versionKey: false }
 );

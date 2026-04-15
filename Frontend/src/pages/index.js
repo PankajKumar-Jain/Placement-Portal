@@ -23,3 +23,5 @@ export { default as SingleCompany } from './AdminPages/SingleCompany';
 export { default as Courses } from './AdminPages/Courses';
 export { default as AdminAnalytics } from './AdminPages/AdminAnalytics';
 export { default as StudentAnnouncements } from './StudentAnnouncements';
+export { default as AdminSettings } from './AdminPages/AdminSettings';
+export { default as StudentPasswordReset } from './StudentPasswordReset';

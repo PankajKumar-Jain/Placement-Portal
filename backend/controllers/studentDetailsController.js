@@ -14,7 +14,12 @@ const { studentProfileDetailsAgg } = require('../models/aggregations');
 
 const CustomAPIError = require('../errors');
 const { StatusCodes } = require('http-status-codes');
-const { fileUpload, validateModelDoc } = require('../utils');
+const {
+  fileUpload,
+  validateModelDoc,
+  createUserToken,
+  attachCookieToResponse,
+} = require('../utils');
 
 const getPersonalData = async (req, res) => {
   const studentId = req.user.userId;
@@ -1037,7 +1042,11 @@ const changePassword = async (req, res) => {
   }
 
   user.password = newPassword;
+  user.forcePasswordReset = false;
   await user.save();
+
+  const userToken = createUserToken(user);
+  attachCookieToResponse(res, userToken);
 
   res.status(StatusCodes.OK).json({
     success: true,
